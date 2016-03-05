@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Maze   {
 	private Hero hero;
 	private Dragon dragon;
+	private Sword sword;
 	private boolean dragonAlive;
 
 	private char[][] board = {
@@ -14,17 +15,19 @@ public class Maze   {
 			{'X','H',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X',' ','X','X',' ','X',' ','X',' ','X'},
 			{'X','D','X','X',' ','X',' ','X',' ','X'},
-			{'X','E','X','X',' ','X',' ','X',' ','X'},
+			{'X',' ','X','X',' ','X',' ','X',' ','X'},
 			{'X',' ',' ',' ',' ',' ',' ','X',' ','S'},
 			{'X',' ','X','X',' ','X',' ','X',' ','X'},
 			{'X',' ','X','X',' ','X',' ','X',' ','X'},
-			{'X',' ','X','X',' ',' ',' ',' ',' ','X'},
+			{'X','E','X','X',' ',' ',' ',' ',' ','X'},
 			{'X','X','X','X','X','X','X','X','X','X'}};
 
 	public Maze(){
 		hero = new Hero(1,1);
 		dragon = new Dragon(1,3);
 		boolean dragonAlive =  true;
+		sword =  new Sword(1,4);
+		
 	}
 
 
@@ -279,13 +282,18 @@ public class Maze   {
 						dragon.setY(dragon.getY()-1);
 						dragon.setX(dragon.getX());
 						board[dragon.getY()][dragon.getX()] = 'D';
-						board[dragon.getY()+1][dragon.getX()] = ' ';	
+						if(sword.getDragonAndSword() == true){
+							board[dragon.getY()+1][dragon.getX()] = 'E';
+							sword.setDragonAndSword(false);
+						}
+						else board[dragon.getY()+1][dragon.getX()] = ' ';	
 					}
-					if(board[dragon.getY()-1][dragon.getX()] == 'E'){
+					else if(board[dragon.getY()-1][dragon.getX()] == 'E'){
 						dragon.setY(dragon.getY()-1);
 						dragon.setX(dragon.getX());
 						board[dragon.getY()][dragon.getX()] = 'F';
 						board[dragon.getY()+1][dragon.getX()] = ' ';
+						sword.setDragonAndSword(true);
 					}	
 				}
 			}
@@ -295,13 +303,18 @@ public class Maze   {
 						dragon.setY(dragon.getY());
 						dragon.setX(dragon.getX()+1);
 						board[dragon.getY()][dragon.getX()] = 'D';
-						board[dragon.getY()][dragon.getX()-1] = ' ';	
+						if(sword.getDragonAndSword() == true){
+							board[dragon.getY()][dragon.getX()-1] = 'E';
+							sword.setDragonAndSword(false);
+						}
+						else board[dragon.getY()][dragon.getX()-1] = ' ';
 					}
-					if(board[dragon.getY()][dragon.getX()+1] == 'E'){
+					else if(board[dragon.getY()][dragon.getX()+1] == 'E'){
 						dragon.setY(dragon.getY());
 						dragon.setX(dragon.getX()+1);
 						board[dragon.getY()][dragon.getX()] = 'F';
 						board[dragon.getY()][dragon.getX()-1] = ' ';
+						sword.setDragonAndSword(true);
 					}	
 				}
 			}
@@ -311,13 +324,18 @@ public class Maze   {
 						dragon.setY(dragon.getY()+1);
 						dragon.setX(dragon.getX());
 						board[dragon.getY()][dragon.getX()] = 'D';
-						board[dragon.getY()-1][dragon.getX()] = ' ';	
+						if(sword.getDragonAndSword() == true){
+							board[dragon.getY()-1][dragon.getX()] = 'E';
+							sword.setDragonAndSword(false);
+						}
+						else board[dragon.getY()-1][dragon.getX()] = ' ';	
 					}
-					if(board[dragon.getY()+1][dragon.getX()] == 'E'){
+					else if(board[dragon.getY()+1][dragon.getX()] == 'E'){
 						dragon.setY(dragon.getY()+1);
 						dragon.setX(dragon.getX());
 						board[dragon.getY()][dragon.getX()] = 'F';
 						board[dragon.getY()-1][dragon.getX()] = ' ';
+						sword.setDragonAndSword(true);
 					}
 				}	
 			}
@@ -327,13 +345,19 @@ public class Maze   {
 						dragon.setY(dragon.getY());
 						dragon.setX(dragon.getX()-1);
 						board[dragon.getY()][dragon.getX()] = 'D';
-						board[dragon.getY()][dragon.getX()+1] = ' ';	
+						if(sword.getDragonAndSword() == true){
+							board[dragon.getY()][dragon.getX()+1] ='E';
+							sword.setDragonAndSword(false);
+						}
+						else board[dragon.getY()][dragon.getX()+1] = ' ';	
 					}
-					if(board[dragon.getY()][dragon.getX()-1] == 'E'){
+					else if(board[dragon.getY()][dragon.getX()-1] == 'E'){
 						dragon.setY(dragon.getY());
 						dragon.setX(dragon.getX()-1);
 						board[dragon.getY()][dragon.getX()] = 'F';
 						board[dragon.getY()][dragon.getX()+1] = ' ';
+						sword.setDragonAndSword(true);
+
 					}	
 				}
 			}
