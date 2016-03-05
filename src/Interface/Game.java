@@ -19,8 +19,9 @@ public class Game     {
 		while(endGame){
 			move1 = game.askForMove() ;
 			endGame = maze.moveHero(move1);
-			maze.moveDragonRandomly();
+			if (dragon.getType() != Dragon.Type.STATIONARY) maze.moveDragonRandomly();
 			maze.printMaze();
+			dragon.randomSleep();
 		}
 		System.out.println("Acabou o jogo!");
 	}

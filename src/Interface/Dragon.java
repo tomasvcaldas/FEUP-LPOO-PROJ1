@@ -11,6 +11,7 @@ public class Dragon {
 	int x, y;
 	private boolean dragonAlive;
 	private Type type;
+	private boolean dragonAsleep;
 	
 	public Dragon(){
 	}
@@ -51,6 +52,14 @@ public class Dragon {
 		y = newY;
 	}
 	
+	public boolean getDragonAsleep(){
+		return dragonAsleep;
+	}
+	
+	public void setDragonAsleep(boolean asleep){
+		dragonAsleep = asleep;
+	}
+	
 	public char askDragonType(){
 		Scanner reader = new Scanner(System.in);
 		System.out.println("Escolho o tipo de dragão durante o jogo - S(stationary), R(random) ou A(alternate random and sleep)");
@@ -67,23 +76,32 @@ public class Dragon {
 		char typedragon = askDragonType();
 
 		if (typedragon == 'S'){
-			type = Dragon.Type.STATIONARY;
-		}
-
+			type = Dragon.Type.STATIONARY;}
 		if (typedragon == 'R'){
-			type = Dragon.Type.RANDOM;
-		}
-
+			type = Dragon.Type.RANDOM;}
 		if (typedragon == 'A'){
-			type = Dragon.Type.SLEEPING;
-		}
+			type = Dragon.Type.SLEEPING;}
 		
 		return type;
 	}
 	
 	public void setType(Type newType){
-		
 		type = newType;
 	}
+	
+	public void randomSleep(){
 		
+		Random r = new Random();
+		int sleep = r.nextInt(1);
+		
+		if (sleep == 0){
+			if (getDragonAsleep() == true){
+				setDragonAsleep(false);// se o dragao está a dormir, passa a estar acordo
+			}
+			if (getDragonAsleep() == false){
+				setDragonAsleep(true); //se o dragao está acordado, adormece
+			}
+		}
+	}
+	
 }
