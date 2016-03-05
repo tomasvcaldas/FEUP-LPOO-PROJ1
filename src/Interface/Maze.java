@@ -26,7 +26,7 @@ public class Maze   {
 		hero = new Hero(1,1);
 		dragon = new Dragon(1,3);
 		boolean dragonAlive =  true;
-		sword =  new Sword(1,4);
+		sword =  new Sword(1,8);
 		
 	}
 
