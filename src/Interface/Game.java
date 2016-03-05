@@ -20,8 +20,7 @@ public class Game     {
 		while(endGame){
 			move1 = game.askForMove() ;
 			endGame = maze.moveHero(move1);
-			//if(dragon.getDragonAlive() == true)
-				maze.moveDragonRandomly();
+			maze.moveDragonRandomly();
 			maze.printMaze();
 		}
 		System.out.println("Acabou o jogo!");
