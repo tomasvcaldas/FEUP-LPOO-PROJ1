@@ -1,16 +1,21 @@
 package Interface;
 import java.util.Random;
+import java.util.Scanner;
 
 
-public class Dragon   {
+public class Dragon {
+	
+	public enum Type {STATIONARY, RANDOM, SLEEPING}
+	//o dragao pode nao se mover, pode mover-se para uma das casas adjacente aleatoriamente ou pode ser aleatorio e dormir.
 	
 	int x, y;
 	private boolean dragonAlive;
+	private Type type;
+	
 	public Dragon(){
-		
 	}
 	
-	public Dragon(int x, int y){
+	public Dragon (int x, int y){
 		dragonAlive =  true;
 		this.x = x;
 		this.y = y;
@@ -46,6 +51,39 @@ public class Dragon   {
 		y = newY;
 	}
 	
+	public char askDragonType(){
+		Scanner reader = new Scanner(System.in);
+		System.out.println("Escolho o tipo de dragão durante o jogo - S(stationary), R(random) ou A(alternate random and sleep)");
+		char typedragon = reader.next().charAt(0);	
+		return typedragon;
+	}
 	
+	public Type getType(){
+		return type;
+	}
+	
+	public Type defineType(){
+
+		char typedragon = askDragonType();
+
+		if (typedragon == 'S'){
+			type = Dragon.Type.STATIONARY;
+		}
+
+		if (typedragon == 'R'){
+			type = Dragon.Type.RANDOM;
+		}
+
+		if (typedragon == 'A'){
+			type = Dragon.Type.SLEEPING;
+		}
+		
+		return type;
+	}
+	
+	public void setType(Type newType){
+		
+		type = newType;
+	}
 		
 }

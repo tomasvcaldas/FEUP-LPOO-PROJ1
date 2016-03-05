@@ -5,15 +5,14 @@ import java.util.Random;
 
 public class Game     {
 	public boolean endGame;
-
 	
-	public Game(){
-	}
+	public Game(){}
 	
 	public static void main(String[] args) {
 		Game game =  new Game();
 		Maze maze  = new Maze();
 		Dragon dragon = new Dragon();
+		dragon.setType(dragon.defineType());
 		char move1;
 		maze.printMaze();
 		boolean endGame = true;
@@ -26,12 +25,10 @@ public class Game     {
 		System.out.println("Acabou o jogo!");
 	}
 		
-	
-	public char askForMove(){
-		char move;
+	public char askForMove(){	
 		Scanner reader = new Scanner(System.in);
 		System.out.print("Para onde deseja mexer o herói? (WASD)");
-		move = reader.next().charAt(0);
+		char move = reader.next().charAt(0);
 		return move;
 	}
 	
