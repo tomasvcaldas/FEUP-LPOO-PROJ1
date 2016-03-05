@@ -334,7 +334,6 @@ public class Maze   {
 						dragon.setX(dragon.getX()-1);
 						board[dragon.getY()][dragon.getX()] = 'F';
 						board[dragon.getY()][dragon.getX()+1] = ' ';
-
 					}	
 				}
 			}
