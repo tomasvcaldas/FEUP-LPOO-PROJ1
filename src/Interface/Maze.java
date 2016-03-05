@@ -274,7 +274,7 @@ public class Maze   {
 	public void moveDragonRandomly(){
 		int move = dragon.randomDragon();
 
-		if (dragon.getDragonAlive() == true || dragon.getDragonAsleep() == false){ //o drago so mexe se estiver vivo e o dragao nao estiver a dormir
+		if (dragon.getDragonAlive() == true && dragon.getDragonAsleep() == false){ //o drago so mexe se estiver vivo e o dragao nao estiver a dormir
 
 			if(move == 1 ){ // move up
 				if(board[dragon.getY()-1][dragon.getX()] != 'X'){

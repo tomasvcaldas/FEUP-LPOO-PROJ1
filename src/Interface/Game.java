@@ -12,16 +12,17 @@ public class Game     {
 		Game game =  new Game();
 		Maze maze  = new Maze();
 		Dragon dragon = new Dragon();
-		dragon.setType(dragon.defineType());
+		//dragon.setType(dragon.defineType());
 		char move1;
 		maze.printMaze();
 		boolean endGame = true;
 		while(endGame){
 			move1 = game.askForMove() ;
 			endGame = maze.moveHero(move1);
-			if (dragon.getType() != Dragon.Type.STATIONARY) maze.moveDragonRandomly();
+			//if (dragon.getType() != Dragon.Type.STATIONARY) 
+			maze.moveDragonRandomly();
 			maze.printMaze();
-			dragon.randomSleep();
+			//dragon.randomSleep();
 		}
 		System.out.println("Acabou o jogo!");
 	}

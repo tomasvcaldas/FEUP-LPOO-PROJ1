@@ -20,6 +20,7 @@ public class Dragon {
 		dragonAlive =  true;
 		this.x = x;
 		this.y = y;
+		dragonAsleep = false;
 	}
 	
 	public boolean getDragonAlive(){
