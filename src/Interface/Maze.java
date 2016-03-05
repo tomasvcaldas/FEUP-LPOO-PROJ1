@@ -9,7 +9,7 @@ public class Maze   {
 	private Dragon dragon;
 	private boolean dragonAlive;
 
-
+//Oi otario
 	private char[][] board = {
 			{'X','X','X','X','X','X','X','X','X','X'},
 			{'X','H',' ',' ',' ',' ',' ',' ',' ','X'},
