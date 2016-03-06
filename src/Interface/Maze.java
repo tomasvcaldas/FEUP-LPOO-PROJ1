@@ -1,8 +1,6 @@
 package Interface;
 
-import java.util.Scanner;
-
-
+import java.util.Random;
 
 public class Maze   {
 	private Hero hero;
@@ -26,22 +24,40 @@ public class Maze   {
 		hero = new Hero(1,1);
 		dragon = new Dragon(1,3);
 		boolean dragonAlive =  true;
+		boolean dragonAsleep = false;
 		sword =  new Sword(1,8);
 		
 	}
-
+	
+	
+public void randomSleep(){
+		
+		Random r = new Random();
+		int sleep = r.nextInt(2);
+		
+		if (sleep == 0){ //se estiver acordado, dorme
+			if (!dragon.getDragonAsleep()) dragon.setDragonAsleep(true);
+			board[dragon.getY()][dragon.getX()] = 'd';
+		}
+		
+		if (sleep == 1){ //se o dragao estiver a dormir, acorda
+			if (dragon.getDragonAsleep()) dragon.setDragonAsleep(false);
+			board[dragon.getY()][dragon.getX()] = 'D';
+		}
+	}
 
 
 	public boolean moveHero(char dir){
-		if(dir == 'W'){
-			if(hero.getHeroArmed() == false){
-				if(board[hero.getY()-1][hero.getX()] != 'X'){
+		
+		if(dir == 'W'){ // move up
+			if(hero.getHeroArmed() == false){ // nao esta armado
+				if(board[hero.getY()-1][hero.getX()] != 'X'){  
 					if(board[hero.getY()-1][hero.getX()] == ' '){
 						hero.setY(hero.getY()-1);
 						hero.setX(hero.getX());
-						board[hero.getY()][hero.getX()] = 'H';
+						board[hero.getY()][hero.getX()] = 'H'; 
 						board[hero.getY()+1][hero.getX()] = ' ';
-						if(board[hero.getY()-1][hero.getX()] == 'D' ){
+						if(board[hero.getY()-1][hero.getX()] == 'D'){
 							board[hero.getY()][hero.getX()] = ' ';
 							return false;
 						}
@@ -66,22 +82,22 @@ public class Maze   {
 						board[hero.getY()][hero.getX()] = 'A';
 						board[hero.getY()+1][hero.getX()] = ' ';
 					}
-					if(board[hero.getY()-1][hero.getX()] == 'D' ){
+					if(board[hero.getY()-1][hero.getX()] == 'D' || board[hero.getY()-1][hero.getX()] == 'd'){
 						board[hero.getY()-1][hero.getX()] = ' ';
 						dragon.setDragonAlive(false);
 					}
-					if(board[hero.getY()][hero.getX()+1] == 'D' ){
+					if(board[hero.getY()][hero.getX()+1] == 'D' || board[hero.getY()][hero.getX()+1] == 'd'){
 						dragon.setDragonAlive(false);
 						board[hero.getY()][hero.getX()+1] = ' ';
 					}
-					if(board[hero.getY()][hero.getX()-1] == 'D' ){
+					if(board[hero.getY()][hero.getX()-1] == 'D' || board[hero.getY()][hero.getX()-1] == 'd'){
 						dragon.setDragonAlive(false);
 						board[hero.getY()][hero.getX()-1] = ' ';
 					}
-					else if(board[hero.getY()-1][hero.getX()] == 'S' && dragon.getDragonAlive()== true){
+					else if(board[hero.getY()-1][hero.getX()] == 'S' && dragon.getDragonAlive()== true){ // se o dragao nao estiver morto, nao pode sair
 						board[hero.getY()-1][hero.getX()] = 'S';
 					}
-					else if(board[hero.getY()-1][hero.getX()] == 'S' && dragon.getDragonAlive() == false ){
+					else if(board[hero.getY()-1][hero.getX()] == 'S' && dragon.getDragonAlive() == false ){// acaba o jogo quando o dragao morrer
 						hero.setY(hero.getY()-1);
 						hero.setX(hero.getX());
 						board[hero.getY()][hero.getX()] = 'A';
@@ -125,15 +141,15 @@ public class Maze   {
 						board[hero.getY()][hero.getX()] = 'A';
 						board[hero.getY()][hero.getX()-1] = ' ';
 					}
-					if(board[hero.getY()][hero.getX()+1] == 'D' ){
+					if(board[hero.getY()][hero.getX()+1] == 'D' || board[hero.getY()][hero.getX()+1] == 'd'){
 						dragon.setDragonAlive(false);
 						board[hero.getY()][hero.getX()+1] = ' ';
 					}
-					if(board[hero.getY()+1][hero.getX()] == 'D' ){
+					if(board[hero.getY()+1][hero.getX()] == 'D' || board[hero.getY()+1][hero.getX()] == 'd' ){
 						dragon.setDragonAlive(false);
 						board[hero.getY()+1][hero.getX()] = ' ';
 					}
-					if(board[hero.getY()-1][hero.getX()] == 'D' ){
+					if(board[hero.getY()-1][hero.getX()] == 'D' || board[hero.getY()-1][hero.getX()] == 'd'){
 						dragon.setDragonAlive(false);
 						board[hero.getY()-1][hero.getX()] = ' ';
 					}
@@ -183,15 +199,15 @@ public class Maze   {
 						board[hero.getY()][hero.getX()] = 'A';
 						board[hero.getY()-1][hero.getX()] = ' ';
 					}
-					if(board[hero.getY()+1][hero.getX()] == 'D' ){
+					if(board[hero.getY()+1][hero.getX()] == 'D' || board[hero.getY()+1][hero.getX()] == 'd' ){
 						board[hero.getY()+1][hero.getX()] = ' ';
 						dragon.setDragonAlive(false);
 					}
-					if(board[hero.getY()][hero.getX()+1] == 'D' ){
+					if(board[hero.getY()][hero.getX()+1] == 'D' || board[hero.getY()][hero.getX()+1] == 'd'){
 						board[hero.getY()][hero.getX()+1] = ' ';
 						dragon.setDragonAlive(false);
 					}
-					if(board[hero.getY()][hero.getX()-1] == 'D' ){
+					if(board[hero.getY()][hero.getX()+1] == 'D' || board[hero.getY()][hero.getX()+1] == 'd'){
 						board[hero.getY()][hero.getX()-1] = ' ';
 						dragon.setDragonAlive(false);
 					}
@@ -243,15 +259,15 @@ public class Maze   {
 						board[hero.getY()][hero.getX()] = 'A';
 						board[hero.getY()][hero.getX()+1] = ' ';
 					}
-					if(board[hero.getY()][hero.getX()-1] == 'D' ){
+					if(board[hero.getY()][hero.getX()-1] == 'D' || board[hero.getY()][hero.getX()-1] == 'd'){
 						board[hero.getY()][hero.getX()-1] = ' ';
 						dragon.setDragonAlive(false);
 					}
-					if(board[hero.getY()+1][hero.getX()] == 'D' ){
+					if(board[hero.getY()+1][hero.getX()] == 'D' || board[hero.getY()+1][hero.getX()] == 'd'){
 						board[hero.getY()+1][hero.getX()] = ' ';
 						dragon.setDragonAlive(false);
 					}
-					if(board[hero.getY()-1][hero.getX()] == 'D' ){
+					if(board[hero.getY()-1][hero.getX()] == 'D' || board[hero.getY()-1][hero.getX()] == 'd' ){
 						board[hero.getY()-1][hero.getX()] = ' ';
 						dragon.setDragonAlive(false);
 					}
