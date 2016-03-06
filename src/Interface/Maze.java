@@ -270,7 +270,7 @@ public class Maze   {
 		}
 		return true;
 	}
-	
+	//oi
 	public void moveDragonRandomly(){
 		int move = dragon.randomDragon();
 
