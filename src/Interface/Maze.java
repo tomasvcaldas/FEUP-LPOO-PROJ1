@@ -1,6 +1,7 @@
 package Interface;
 
 import java.util.Scanner;
+import java.util.Random;
 
 
 
@@ -30,6 +31,34 @@ public class Maze   {
 		
 	}
 
+public void randomSleep(){
+		
+		Random r = new Random();
+		int sleep = r.nextInt(2);
+		if(dragon.getDragonAlive() == true){
+		if (sleep == 0){ //se estiver acordado, dorme
+			if (!dragon.getDragonAsleep()){
+				dragon.setDragonAsleep(true);
+				board[dragon.getY()][dragon.getX()] = 'd';
+			}
+		}
+		
+		if (sleep == 1){ //se o dragao estiver a dormir, acorda
+			if (dragon.getDragonAsleep()){
+				dragon.setDragonAsleep(false);
+				board[dragon.getY()][dragon.getX()] = 'D';
+			}
+		}
+		}
+	}
+
+	public boolean getDragonAlive(){
+		return dragonAlive;
+	}
+	
+	public void setDragonAlive(boolean alive){
+		dragonAlive = alive;
+	}
 
 
 	public boolean moveHero(char dir){
@@ -43,7 +72,13 @@ public class Maze   {
 						board[hero.getY()+1][hero.getX()] = ' ';
 						if(board[hero.getY()-1][hero.getX()] == 'D' ){
 							board[hero.getY()][hero.getX()] = ' ';
+							System.out.println("O dragão matou o herói!");
 							return false;
+						}
+						if(board[hero.getY()-1][hero.getX()] == 'd'){
+							board[dragon.getY()][dragon.getX()] = ' ';
+							System.out.println("O Dragão estava a dormir e o herói matou-o!");
+							dragon.setDragonAlive(false);
 						}
 					}
 					else if(board[hero.getY()-1][hero.getX()] == 'E'){
@@ -66,17 +101,26 @@ public class Maze   {
 						board[hero.getY()][hero.getX()] = 'A';
 						board[hero.getY()+1][hero.getX()] = ' ';
 					}
-					if(board[hero.getY()-1][hero.getX()] == 'D' ){
-						board[hero.getY()-1][hero.getX()] = ' ';
+					if(board[hero.getY()-1][hero.getX()] == 'D' || board[hero.getY()-1][hero.getX()] == 'd'){
+						//board[hero.getY()-1][hero.getX()] = ' ';
+						board[dragon.getY()][dragon.getX()] = ' ';
+						System.out.println("O herói matou o dragão!");
+						setDragonAlive(false);
 						dragon.setDragonAlive(false);
 					}
-					if(board[hero.getY()][hero.getX()+1] == 'D' ){
+					if(board[hero.getY()][hero.getX()+1] == 'D' || board[hero.getY()][hero.getX()+1] == 'd' ){
+						//board[hero.getY()][hero.getX()+1] = ' ';
+						board[dragon.getY()][dragon.getX()] = ' ';
+						System.out.println("O herói matou o dragão!");
+						setDragonAlive(false);
 						dragon.setDragonAlive(false);
-						board[hero.getY()][hero.getX()+1] = ' ';
 					}
-					if(board[hero.getY()][hero.getX()-1] == 'D' ){
+					if(board[hero.getY()][hero.getX()-1] == 'D' || board[hero.getY()][hero.getX()-1] == 'd'){
+						//board[hero.getY()][hero.getX()-1] = ' ';
+						board[dragon.getY()][dragon.getX()] = ' ';
+						System.out.println("O herói matou o dragão!");
+						setDragonAlive(false);
 						dragon.setDragonAlive(false);
-						board[hero.getY()][hero.getX()-1] = ' ';
 					}
 					else if(board[hero.getY()-1][hero.getX()] == 'S' && dragon.getDragonAlive()== true){
 						board[hero.getY()-1][hero.getX()] = 'S';
@@ -101,7 +145,13 @@ public class Maze   {
 						board[hero.getY()][hero.getX()-1] = ' ';
 						if(board[hero.getY()][hero.getX()+1] == 'D'){
 							board[dragon.getY()][dragon.getX()] = ' ';
+							System.out.println("O dragão matou o herói!");
 							return false;
+						}
+						if(board[hero.getY()][hero.getX()+1] == 'd'){
+							board[dragon.getY()][dragon.getX()] = ' ';
+							System.out.println("O Dragão estava a dormir e o herói matou-o!");
+							dragon.setDragonAlive(false);
 						}
 					}
 					else if(board[hero.getY()][hero.getX()+1] == 'E'){
@@ -125,17 +175,27 @@ public class Maze   {
 						board[hero.getY()][hero.getX()] = 'A';
 						board[hero.getY()][hero.getX()-1] = ' ';
 					}
-					if(board[hero.getY()][hero.getX()+1] == 'D' ){
+					if(board[hero.getY()][hero.getX()+1] == 'D' || board[hero.getY()][hero.getX()+1] == 'd' ){
+						//board[hero.getY()][hero.getX()+1] = ' ';
+						board[dragon.getY()][dragon.getX()] = ' ';
+						System.out.println("O herói matou o dragão!");
+						setDragonAlive(false);
 						dragon.setDragonAlive(false);
-						board[hero.getY()][hero.getX()+1] = ' ';
 					}
-					if(board[hero.getY()+1][hero.getX()] == 'D' ){
+					if(board[hero.getY()+1][hero.getX()] == 'D' || board[hero.getY()+1][hero.getX()] == 'd' ){
+						//board[hero.getY()+1][hero.getX()] = ' ';
+						board[dragon.getY()][dragon.getX()] = ' ';
+						System.out.println("O herói matou o dragão!");
+						setDragonAlive(false);
 						dragon.setDragonAlive(false);
-						board[hero.getY()+1][hero.getX()] = ' ';
 					}
-					if(board[hero.getY()-1][hero.getX()] == 'D' ){
+					if(board[hero.getY()-1][hero.getX()] == 'D' || board[hero.getY()-1][hero.getX()] == 'd' ){
+						System.out.println("O herói matou o dragão!");
+						board[dragon.getY()][dragon.getX()] = ' ';
+						//board[hero.getY()-1][hero.getX()] = ' ';
+						setDragonAlive(false);
 						dragon.setDragonAlive(false);
-						board[hero.getY()-1][hero.getX()] = ' ';
+						
 					}
 					else if(board[hero.getY()][hero.getX()+1] == 'S' && dragon.getDragonAlive()== true){
 						board[hero.getY()][hero.getX()+1] = 'S';
@@ -159,8 +219,14 @@ public class Maze   {
 						board[hero.getY()][hero.getX()] = 'H';
 						board[hero.getY()-1][hero.getX()] = ' ';
 						if(board[hero.getY()+1][hero.getX()] == 'D' ){
-							board[hero.getY()][hero.getX()] = ' ';
+							//board[hero.getY()][hero.getX()] = ' ';
+							System.out.println("O dragão matou o herói!");
 							return false;
+						}
+						if(board[hero.getY()+1][hero.getX()] == 'd'){
+							board[dragon.getY()][dragon.getX()] = ' ';
+							System.out.println("O Dragão estava a dormir e o herói matou-o!");
+							dragon.setDragonAlive(false);
 						}
 					}
 					else if(board[hero.getY()+1][hero.getX()] == 'E'){
@@ -183,16 +249,25 @@ public class Maze   {
 						board[hero.getY()][hero.getX()] = 'A';
 						board[hero.getY()-1][hero.getX()] = ' ';
 					}
-					if(board[hero.getY()+1][hero.getX()] == 'D' ){
-						board[hero.getY()+1][hero.getX()] = ' ';
+					if(board[hero.getY()+1][hero.getX()] == 'D' || board[hero.getY()+1][hero.getX()] == 'd'){
+						//board[hero.getY()+1][hero.getX()] = ' ';
+						board[dragon.getY()][dragon.getX()] = ' ';
+						System.out.println("O herói matou o dragão!");
+						setDragonAlive(false);
 						dragon.setDragonAlive(false);
 					}
-					if(board[hero.getY()][hero.getX()+1] == 'D' ){
-						board[hero.getY()][hero.getX()+1] = ' ';
+					if(board[hero.getY()][hero.getX()+1] == 'D' || board[hero.getY()][hero.getX()+1] == 'd' ){
+						//board[hero.getY()][hero.getX()+1] = ' ';
+						board[dragon.getY()][dragon.getX()] = ' ';
+						System.out.println("O herói matou o dragão!");
+						setDragonAlive(false);
 						dragon.setDragonAlive(false);
 					}
-					if(board[hero.getY()][hero.getX()-1] == 'D' ){
-						board[hero.getY()][hero.getX()-1] = ' ';
+					if(board[hero.getY()][hero.getX()-1] == 'D' || board[hero.getY()][hero.getX()-1] == 'd'  ){
+						board[dragon.getY()][dragon.getX()] = ' ';
+						//board[hero.getY()][hero.getX()-1] = ' ';
+						System.out.println("O herói matou o dragão!");
+						setDragonAlive(false);
 						dragon.setDragonAlive(false);
 					}
 
@@ -220,7 +295,13 @@ public class Maze   {
 						board[hero.getY()][hero.getX()+1] = ' ';
 						if(board[hero.getY()][hero.getX()-1] == 'D' ){
 							board[hero.getY()][hero.getX()] = ' ';
+							System.out.println("O dragão matou o herói!");
 							return false;
+						}
+						if(board[hero.getY()][hero.getX()-1] == 'd'){
+							board[dragon.getY()][dragon.getX()] = ' ';
+							System.out.println("O Dragão estava a dormir e o herói matou-o!");
+							dragon.setDragonAlive(false);
 						}
 					}
 					else if(board[hero.getY()][hero.getX()-1] == 'E'){
@@ -243,16 +324,25 @@ public class Maze   {
 						board[hero.getY()][hero.getX()] = 'A';
 						board[hero.getY()][hero.getX()+1] = ' ';
 					}
-					if(board[hero.getY()][hero.getX()-1] == 'D' ){
-						board[hero.getY()][hero.getX()-1] = ' ';
+					if(board[hero.getY()][hero.getX()-1] == 'D'  || board[hero.getY()][hero.getX()-1] == 'd'){
+						//board[hero.getY()][hero.getX()-1] = ' ';
+						board[dragon.getY()][dragon.getX()] = ' ';
+						System.out.println("O herói matou o dragão!");
+						setDragonAlive(false);
 						dragon.setDragonAlive(false);
 					}
-					if(board[hero.getY()+1][hero.getX()] == 'D' ){
-						board[hero.getY()+1][hero.getX()] = ' ';
+					if(board[hero.getY()+1][hero.getX()] == 'D'  || board[hero.getY()+1][hero.getX()] == 'd'  ){
+						//board[hero.getY()+1][hero.getX()] = ' ';
+						board[dragon.getY()][dragon.getX()] = ' ';
+						System.out.println("O herói matou o dragão!");
+						setDragonAlive(false);
 						dragon.setDragonAlive(false);
 					}
-					if(board[hero.getY()-1][hero.getX()] == 'D' ){
-						board[hero.getY()-1][hero.getX()] = ' ';
+					if(board[hero.getY()-1][hero.getX()] == 'D' || board[hero.getY()-1][hero.getX()] == 'd' ){
+						//board[hero.getY()-1][hero.getX()] = ' ';
+						board[dragon.getY()][dragon.getX()] = ' ';
+						System.out.println("O herói matou o dragão!");
+						setDragonAlive(false);
 						dragon.setDragonAlive(false);
 					}
 					else if(board[hero.getY()][hero.getX()-1] == 'S' && dragon.getDragonAlive()== true){
@@ -270,12 +360,72 @@ public class Maze   {
 		}
 		return true;
 	}
+	
+	public boolean checkDragonPosition(){
+		if(dragon.getDragonAlive() == true){
+			if(hero.getHeroArmed() == false){
+				if(board[hero.getY()+1][hero.getX()] == 'D' || board[hero.getY()+1][hero.getX()] == 'd'){
+					board[hero.getY()][hero.getX()] = ' ';
+					hero.setHeroAlive(false);
+					System.out.println("O dragão matou o herói!");
+					return false;
+					}
+				else if(board[hero.getY()-1][hero.getX()] == 'D' || board[hero.getY()-1][hero.getX()] == 'd'){
+					board[hero.getY()][hero.getX()] = ' ';
+					hero.setHeroAlive(false);
+					System.out.println("O dragão matou o herói!");
+					return false;}
+				else if(board[hero.getY()][hero.getX()+1] == 'D' || board[hero.getY()][hero.getX()+1] == 'd'){
+					board[hero.getY()][hero.getX()] = ' ';
+					hero.setHeroAlive(false);
+					System.out.println("O dragão matou o herói!");
+					return false;}
+				else if(board[hero.getY()][hero.getX()-1] == 'D' || board[hero.getY()][hero.getX()-1] == 'd'){
+					board[hero.getY()][hero.getX()] = ' ';
+					hero.setHeroAlive(false);
+					System.out.println("O dragão matou o herói!");
+					return false;}
+				
+			}
+			else if(hero.getHeroArmed() == true){
+				if (board[hero.getY() + 1][hero.getX()] == 'D' || board[hero.getY() + 1][hero.getX()] == 'd'){
+					board[dragon.getY()][dragon.getX()] = ' ';
+					dragon.setDragonAlive(false);
+					System.out.println("O herói matou o dragão!");
+					setDragonAlive(false);
+					return true;
+				}
+				else if (board[hero.getY() - 1][hero.getX()] == 'D' || board[hero.getY() - 1][hero.getX()] == 'd'){
+					board[dragon.getY()][dragon.getX()] = ' ';
+					dragon.setDragonAlive(false);
+					System.out.println("O herói matou o dragão!");
+					setDragonAlive(false);
+					return true;
+				}
+				else if (board[hero.getY()][hero.getX()+1] == 'D' || board[hero.getY()][hero.getX()+1] == 'd'){
+					board[dragon.getY()][dragon.getX()] = ' ';
+					dragon.setDragonAlive(false);
+					System.out.println("O herói matou o dragão!");
+					setDragonAlive(false);
+					return true;
+				}
+				else if (board[hero.getY()][hero.getX()-1] == 'D' || board[hero.getY()][hero.getX()-1] == 'd'){
+					board[dragon.getY()][dragon.getX()] = ' ';
+					dragon.setDragonAlive(false);
+					System.out.println("O herói matou o dragão!");
+					setDragonAlive(false);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	
 	//oi
 	public void moveDragonRandomly(){
 		int move = dragon.randomDragon();
-
 		if (dragon.getDragonAlive() == true && dragon.getDragonAsleep() == false){ //o drago so mexe se estiver vivo e o dragao nao estiver a dormir
-
 			if(move == 1 ){ // move up
 				if(board[dragon.getY()-1][dragon.getX()] != 'X'){
 					if(board[dragon.getY()-1][dragon.getX()] == ' '){

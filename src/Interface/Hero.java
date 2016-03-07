@@ -18,6 +18,9 @@ public class Hero  {
 		heroArmed =  false;
 		h = 'H';
 	}
+	public Hero(){
+		
+	}
 	public int getX(){
 		return x;
 	}

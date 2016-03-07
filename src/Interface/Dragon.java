@@ -90,19 +90,5 @@ public class Dragon {
 		type = newType;
 	}
 	
-	public void randomSleep(){
-		
-		Random r = new Random();
-		int sleep = r.nextInt(1);
-		
-		if (sleep == 0){
-			if (getDragonAsleep() == true){
-				setDragonAsleep(false);// se o dragao está a dormir, passa a estar acordo
-			}
-			if (getDragonAsleep() == false){
-				setDragonAsleep(true); //se o dragao está acordado, adormece
-			}
-		}
-	}
 	
 }
