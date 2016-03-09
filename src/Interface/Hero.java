@@ -1,4 +1,5 @@
 package Interface;
+import java.util.Scanner;
 
 public class Hero  {
 
