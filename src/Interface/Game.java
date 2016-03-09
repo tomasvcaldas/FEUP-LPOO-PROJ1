@@ -1,11 +1,11 @@
 package Interface;
 import java.util.Scanner;
-import java.util.Random;
-
 
 public class Game     {
 	public boolean endGame;
-	public boolean dragonAlive;
+	public boolean dragonDead; 
+	public boolean heroAlive;
+	public boolean playingGame;
 
 	public Game(){}
 
@@ -17,36 +17,37 @@ public class Game     {
 		dragon.setType(dragon.defineType());
 		char move1;
 		maze.printMaze();
+		boolean heroAlive = true;
+		boolean dragonDead= false;
 		boolean playingGame = true;
-		while(playingGame == true){
+		boolean gameRunning = true;
+		while(gameRunning == true && heroAlive == true){
 			move1 = game.askForMove();
-			playingGame = maze.moveHero(move1);
-				if (dragon.getType() == Dragon.Type.RANDOM  && playingGame == true ){
+			gameRunning = maze.moveHero(move1);
+			heroAlive = maze.checkDragonPosition();
+				if (dragon.getType() == Dragon.Type.RANDOM ){
 					maze.moveDragonRandomly();
-					playingGame = maze.checkDragonPosition();
+					heroAlive = maze.checkDragonPosition();
 				}
-				else if (dragon.getType() == Dragon.Type.SLEEPING && maze.checkDragonPosition() == true){
+				
+				else if (dragon.getType() == Dragon.Type.SLEEPING ){
 					maze.randomSleep();
 					if (!dragon.getDragonAsleep()){
 						maze.moveDragonRandomly();
-						maze.checkDragonPosition();
+						heroAlive = maze.checkDragonPosition();
 					}
 				}
-				//playingGame = maze.checkDragonPosition();
-			maze.printMaze();
+				
+				maze.printMaze();
 		}
-		System.out.println("Acabou o jogo!");
+		System.out.println("Acabou o jogo");
 	}
 
 	public char askForMove(){	
 		Scanner reader = new Scanner(System.in);
-		System.out.print("Para onde deseja mexer o herói? (WASD)");
+		System.out.print("Para onde deseja movimentar o herói? (W-up / A-left / S-down / D- right)");
 		char move = reader.next().charAt(0);
 		return move;
-	}
-	
-	public boolean getDragonAlive(){
-		return dragonAlive;
 	}
 
 	public boolean getEndGame(){

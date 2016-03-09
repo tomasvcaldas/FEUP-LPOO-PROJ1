@@ -2,7 +2,6 @@ package Interface;
 import java.util.Random;
 import java.util.Scanner;
 
-
 public class Dragon {
 	
 	public enum Type {STATIONARY, RANDOM, SLEEPING}
@@ -89,6 +88,5 @@ public class Dragon {
 	public void setType(Type newType){
 		type = newType;
 	}
-	
-	
+
 }
