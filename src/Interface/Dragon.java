@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Dragon {
 	
+	//oi
 	public enum Type {STATIONARY, RANDOM, SLEEPING}
 	//o dragao pode nao se mover, pode mover-se para uma das casas adjacente aleatoriamente ou pode ser aleatorio e dormir.
 	
