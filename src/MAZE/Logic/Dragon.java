@@ -16,7 +16,7 @@ public class Dragon {
 	}
 	
 	public Dragon (int x, int y){
-		dragonAlive =  true;
+		dragonAlive = true;
 		this.x = x;
 		this.y = y;
 		dragonAsleep = false;

@@ -43,9 +43,10 @@ public class Stationary {
 
 		Maze maze = new Maze();	
 		maze.moveHero('S');
-		maze.checkDragonPosition();
 		assertEquals(false,maze.getHero().getHeroArmed());
+		maze.checkDragonPosition();	
 		assertEquals(false,maze.getHero().getHeroAlive());
+		assertEquals(false, maze.getVitoria());
 	}
 
 	@Test
@@ -97,11 +98,11 @@ public class Stationary {
 	public void test2h(){
 		Maze maze = new Maze();
 		maze.getHero().setHeroArmed(true); //esta armado
-		maze.getDragon().setDragonAlive(false); //mas nao matou o dragao
+		maze.getDragon().setDragonAlive(true); //mas nao matou o dragao
 		maze.getHero().setX(8);
 		maze.getHero().setY(5);
 		maze.moveHero('D');
-		assertEquals(false,maze.getVitoria()); 
+		assertEquals(false,maze.getVitoria());  //nao ganha
 	}
 	
 }

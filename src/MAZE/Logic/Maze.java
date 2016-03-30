@@ -5,7 +5,6 @@ public class Maze   {
 	private Hero hero;
 	private Dragon dragon;
 	private Sword sword;
-	private boolean dragonAlive;
 	private boolean vitoria;
 
 	private char[][] board = {
@@ -23,8 +22,6 @@ public class Maze   {
 	public Maze(){
 		hero = new Hero(1,1);
 		dragon = new Dragon(1,3);
-		//boolean dragonAlive =  true;
-		//boolean dragonAsleep = false;
 		sword =  new Sword(1,8);
 		
 	}
@@ -58,17 +55,6 @@ public Hero getHero() {
 	public void setSword(Sword sword) {
 		this.sword = sword;
 	}
-
-
-	public boolean isDragonAlive() {
-		return dragonAlive;
-	}
-
-
-	public void setDragonAlive(boolean dragonAlive) {
-		this.dragonAlive = dragonAlive;
-	}
-
 
 	public char[][] getBoard() {
 		return board;
