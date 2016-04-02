@@ -22,35 +22,29 @@ public class Maze   {
 	public Maze(){
 		hero = new Hero(1,1);
 		dragon = new Dragon(1,3);
-		sword =  new Sword(1,8);
-		
+		sword =  new Sword(1,8);		
 	}
 	
 	
-public Hero getHero() {
+	public Hero getHero() {
 		return hero;
 	}
-
 
 	public void setHero(Hero hero) {
 		this.hero = hero;
 	}
 
-
 	public Dragon getDragon() {
 		return dragon;
 	}
-
 
 	public void setDragon(Dragon dragon) {
 		this.dragon = dragon;
 	}
 
-
 	public Sword getSword() {
 		return sword;
 	}
-
 
 	public void setSword(Sword sword) {
 		this.sword = sword;
@@ -60,13 +54,26 @@ public Hero getHero() {
 		return board;
 	}
 
-
 	public void setBoard(char[][] board) {
 		this.board = board;
 	}
 	
 	public boolean getVitoria(){
 		return vitoria;
+	}
+	
+	public String toString(){
+		
+		String str = "";
+		
+		for (int i =0; i < board.length; i++){
+			for (int j =0; j < board[i].length; j++){
+				str = str + board[i][j];
+				str = str + " ";
+			}
+			str += "\n"; 
+		}
+		return str;
 	}
 
 
@@ -277,25 +284,21 @@ public void randomSleep(){
 				if(board[hero.getY()+1][hero.getX()] == 'D' ){
 					board[hero.getY()][hero.getX()] = ' ';
 					hero.setHeroAlive(false);
-					System.out.println("O dragão matou o herói!");
 					return false;
 					}
 				else if(board[hero.getY()-1][hero.getX()] == 'D'){
 					board[hero.getY()][hero.getX()] = ' ';
 					hero.setHeroAlive(false);
-					System.out.println("O dragão matou o herói!");
 					return false;
 					}
 				else if(board[hero.getY()][hero.getX()+1] == 'D' ){
 					board[hero.getY()][hero.getX()] = ' ';
 					hero.setHeroAlive(false);
-					System.out.println("O dragão matou o herói!");
 					return false;
 					}
 				else if(board[hero.getY()][hero.getX()-1] == 'D' ){
 					board[hero.getY()][hero.getX()] = ' ';
 					hero.setHeroAlive(false);
-					System.out.println("O dragão matou o herói!");
 					return false;
 					}
 				
@@ -304,25 +307,21 @@ public void randomSleep(){
 				if (board[hero.getY() + 1][hero.getX()] == 'D' || board[hero.getY() + 1][hero.getX()] == 'd'){
 					board[dragon.getY()][dragon.getX()] = ' ';
 					dragon.setDragonAlive(false);
-					System.out.println("O herói matou o dragão!");
 					return true;
 				}
 				else if (board[hero.getY() - 1][hero.getX()] == 'D' || board[hero.getY() - 1][hero.getX()] == 'd'){
 					board[dragon.getY()][dragon.getX()] = ' ';
 					dragon.setDragonAlive(false);
-					System.out.println("O herói matou o dragão!");
 					return true;
 				}
 				else if (board[hero.getY()][hero.getX()+1] == 'D' || board[hero.getY()][hero.getX()+1] == 'd'){
 					board[dragon.getY()][dragon.getX()] = ' ';
 					dragon.setDragonAlive(false);
-					System.out.println("O herói matou o dragão!");
 					return true;
 				}
 				else if (board[hero.getY()][hero.getX()-1] == 'D' || board[hero.getY()][hero.getX()-1] == 'd'){
 					board[dragon.getY()][dragon.getX()] = ' ';
 					dragon.setDragonAlive(false);
-					System.out.println("O herói matou o dragão!");
 					return true;
 				}
 			}

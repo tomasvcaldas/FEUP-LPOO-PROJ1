@@ -1,7 +1,6 @@
 package MAZE.Test;
 import static org.junit.Assert.*;
 import org.junit.Test;
-import MAZE.Interface.Game;
 import MAZE.Logic.*;
 
 public class Stationary {
