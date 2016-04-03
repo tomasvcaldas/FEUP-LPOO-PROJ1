@@ -10,6 +10,12 @@ public class Stationary {
 					{'X', ' ', 'X', ' ', 'X'},
 					{'X', 'E', ' ', 'D', 'X'},
 					{'X', 'X', 'X', 'X', 'X'}};
+	
+	char[][] m2 = {{'X', 'X', 'X', 'X', 'X'},
+				   {'X', ' ', ' ', 'D', 'S'},
+				   {'X', ' ', 'X', ' ', 'X'},
+				   {'X', 'E', 'H', ' ', 'X'},
+				   {'X', 'X', 'X', 'X', 'X'}};
 
 	@Test
 	public void test2a() {
@@ -20,6 +26,17 @@ public class Stationary {
 		maze.moveHero('A');
 		assertEquals(2,maze.getHero().getX());
 		assertEquals(1,maze.getHero().getY());	
+	}
+	
+	@Test
+	public void moveRight() {
+
+		Maze maze = new Maze();
+		maze.setBoard(m2);
+		maze.setHero(new Hero(2,3));
+		maze.moveHero('D');
+		assertEquals(3,maze.getHero().getX());
+		assertEquals(3,maze.getHero().getY());	
 	}
 
 	@Test
