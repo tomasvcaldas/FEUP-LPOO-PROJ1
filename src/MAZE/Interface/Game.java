@@ -26,26 +26,40 @@ public class Game     {
 		int dragons = reader.nextInt();
 		mazeBuilder.buildMaze(size, dragons);
 		Dragon dragon = new Dragon();
-		dragon.setType(dragon.defineType());
+		MazeBuilder mazeBuilder = new MazeBuilder();
 		char move1;
-		maze.printMaze();
 		boolean heroAlive = true;
 		boolean dragonDead= false;
 		boolean playingGame = true;
 		boolean gameRunning = true;
+		
+		Scanner reader = new Scanner(System.in);
+		System.out.println("Qual vai ser o tamanho do lado do tabuleiro ?");
+		int size = reader.nextInt();
+		System.out.println("Quantos dragões ? ");
+		int dragons = reader.nextInt();
+		
+		maze.setBoard(mazeBuilder.buildMaze(size)); // cria o random maze
+		maze.placeHero();
+		maze.placeDragons(dragons);
+		maze.placeSword();
+		dragon.setType(dragon.defineType());
+		maze.printMaze();
+		
 		while(gameRunning == true && heroAlive == true){
 			move1 = game.askForMove();
 			gameRunning = maze.moveHero(move1);
 			heroAlive = maze.checkDragonPosition();
 				if (dragon.getType() == Dragon.Type.RANDOM ){
-					maze.moveDragonRandomly();
+					maze.moveAllDragons();
+					//maze.moveDragonRandomly();
 					heroAlive = maze.checkDragonPosition();
 				}
-				
 				else if (dragon.getType() == Dragon.Type.SLEEPING ){
 					maze.randomSleep();
 					if (!dragon.getDragonAsleep()){
-						maze.moveDragonRandomly();
+						maze.moveAllDragons();
+						//maze.moveDragonRandomly();
 						heroAlive = maze.checkDragonPosition();
 					}
 				}
@@ -70,5 +84,3 @@ public class Game     {
 		endGame = end;
 	}
 }
-
-

@@ -5,10 +5,12 @@ import java.util.*;
 public class MazeBuilder {
 	public int size, visitedCellsDimension;
 	public char[][] maze;
-	//boolean[][] visitedCells;
 	char[][] visitedCell;
 	Cell guideCell;
 	Stack<Cell> pathHistory;
+	private Hero hero;
+	private Dragon dragon;
+	private Sword sword;
 
 	public MazeBuilder(){}
 
@@ -40,14 +42,12 @@ public class MazeBuilder {
 
 
 
-	public void buildMaze(int size, int numDragons){
+	public char[][] buildMaze(int size){
 		maze = new char[size][size];
 		visitedCellsDimension = (size - 1) / 2;
-		//visitedCells = new boolean[visitedCellsDimension][visitedCellsDimension];
 		pathHistory = new Stack<Cell>();
 		visitedCell = new char[visitedCellsDimension][visitedCellsDimension];
-
-
+		
 		//initial maze
 		for(int i  = 0; i < size; i++)
 			for(int j = 0; j< size; j++)
@@ -57,16 +57,11 @@ public class MazeBuilder {
 					maze[i][j] = 'X';
 
 
-
-		//visited cell version 2
+		//visited cells maze
 		for (int i = 0; i < visitedCellsDimension; i++)
 			for(int j = 0; j < visitedCellsDimension; j++){ 
 				visitedCell[i][j] = '.';
 			}
-
-
-
-
 
 		//guideCell 
 		Random rand = new Random();
@@ -97,7 +92,6 @@ public class MazeBuilder {
 		}
 		guideCell = new Cell((line - 1)/2, (col - 1)/2);
 		pathHistory.push(new Cell(guideCell.col,guideCell.line));
-		//visitedCells[(col-1)/2][(line-1)/2] = true;
 		visitedCell[(col-1)/2][(line-1)/2] = '+';
 
 
@@ -113,7 +107,7 @@ public class MazeBuilder {
 
 		
 
-
+		
 		while(!pathHistory.empty()){
 			do{
 				rand = new Random();
@@ -124,7 +118,6 @@ public class MazeBuilder {
 						if(visitedCell[guideCell.col-1][guideCell.line] == '.'){
 							maze[guideCell.col*2+1][guideCell.line*2+1] =' ';
 							maze[guideCell.col*2][guideCell.line*2+1] =' ';
-							//maze[guideCell.col*2-1][guideCell.line*2+1] ='+';
 							guideCell.col = guideCell.col-1;
 							visitedCell[guideCell.col][guideCell.line] = '+';
 							pathHistory.push(new Cell(guideCell.col,guideCell.line));
@@ -136,7 +129,6 @@ public class MazeBuilder {
 						if(visitedCell[guideCell.col][guideCell.line-1] == '.'){
 							maze[guideCell.col*2+1][guideCell.line*2+1] =' ';
 							maze[guideCell.col*2+1][guideCell.line*2] =' ';
-							//maze[guideCell.col*2+1][guideCell.line*2-1] ='+';
 							guideCell.line = guideCell.line-1;
 							visitedCell[guideCell.col][guideCell.line] = '+';
 							pathHistory.push(new Cell(guideCell.col,guideCell.line));
@@ -148,7 +140,6 @@ public class MazeBuilder {
 						if(visitedCell[guideCell.col][guideCell.line+1] == '.'){
 							maze[guideCell.col*2+1][guideCell.line*2+1] =' ';
 							maze[guideCell.col*2+1][guideCell.line*2+2] =' ';
-							//maze[guideCell.col*2+1][guideCell.line*2+3] ='+';
 							guideCell.line = guideCell.line+1;
 							visitedCell[guideCell.col][guideCell.line] = '+';
 							pathHistory.push(new Cell(guideCell.col,guideCell.line));
@@ -160,7 +151,6 @@ public class MazeBuilder {
 						if(visitedCell[guideCell.col+1][guideCell.line] == '.'){
 							maze[guideCell.col*2+1][guideCell.line*2+1] =' ';
 							maze[guideCell.col*2+2][guideCell.line*2+1] =' ';
-							//maze[guideCell.col*2+3][guideCell.line*2+1] ='+';
 							guideCell.col = guideCell.col+1;
 							visitedCell[guideCell.col][guideCell.line] = '+';
 							pathHistory.push(new Cell(guideCell.col,guideCell.line));
@@ -174,53 +164,7 @@ public class MazeBuilder {
 
 		}
 		cleanMaze2();
-
-
-
-
-		//hero
-		rand = new Random();
-		boolean placed = false;
-		while(placed == false){
-			int heroLine = rand.nextInt(size);
-			int heroCol = rand.nextInt(size);
-
-			if(maze[heroCol][heroLine] == ' '){
-				maze[heroCol][heroLine] = 'H';
-				placed = true;
-			}
-		}
-
-		//dragon
-		for(int i = 0; i < numDragons; i++){
-			placed = false;
-			while(placed  == false){
-				int dragonLine = rand.nextInt(size);
-				int dragonCol = rand.nextInt(size);
-
-				if(maze[dragonCol][dragonLine] == ' ' && maze[dragonCol-1][dragonLine] != 'H' 
-						&& maze[dragonCol+1][dragonLine] != 'H' && maze[dragonCol][dragonLine] != 'H'
-						&& maze[dragonCol][dragonLine] != 'H'){
-					maze[dragonCol][dragonLine] = 'D';
-					placed = true;
-				}
-
-			}
-		}
-
-		//sword
-		placed = false;
-		while(placed == false){
-			int swordLine = rand.nextInt(size);
-			int swordCol = rand.nextInt(size);
-
-			if (maze[swordCol][swordLine] == ' '){
-				maze[swordCol][swordLine] = 'E';
-				placed = true;
-			}
-		}
-
-
+		return maze;
 
 	}
 
@@ -253,6 +197,9 @@ public class MazeBuilder {
 			maze[guideCell.line*2+1][guideCell.col*2] = ' ';
 
 	}
+	
+	public char[][] getMaze(){
+		return maze;
+	}
 
 }
-

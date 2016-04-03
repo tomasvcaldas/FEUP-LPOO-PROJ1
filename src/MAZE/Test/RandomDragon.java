@@ -4,7 +4,7 @@ import org.junit.Test;
 import MAZE.Logic.*;
 import java.awt.Point;
 
-
+/*
 public class RandomDragon {
 	
 
@@ -85,4 +85,4 @@ public class RandomDragon {
 		}
 	}
 
-}
+/*/

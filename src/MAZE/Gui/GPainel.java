@@ -9,16 +9,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class GPainel extends JPanel implements KeyListener{
+public class GPainel extends JPanel{
 	
 	Image dragonAwake, dragonAsleep, wall, heroArmed, heroUnarmed, exit, sword, relva;
 	private int x=0, y=0, width=25, height=25;
 	
-	private Maze maze;
+	private char[][] maze;
 	
-	public void setMaze(Maze maze){
-		this.maze = maze;
+	public void setMaze(char[][] maze){
+		this.maze=maze;
 	}
+
 	
 	
 	public GPainel() {
@@ -38,73 +39,32 @@ public class GPainel extends JPanel implements KeyListener{
 		sword= sword.getScaledInstance(width, height, 1);
 		wall = new ImageIcon("wall.jpg").getImage();
 		wall= wall.getScaledInstance(width, height, 1);
-		
-		addKeyListener(this);
-		this.setFocusable(true);
+
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
-		for (int i=0; i < maze.getBoard().length; i++){
-			for (int j=0; j < maze.getBoard()[i].length; j++){
-				if (maze.getBoard()[j][i] == 'D' || maze.getBoard()[i][j] == 'F')
+
+		for (int i=0; i < maze.length; i++){
+			for (int j=0; j < maze[i].length; j++){
+				if (maze[j][i] == 'D' || maze[i][j] == 'F')
 					g.drawImage(dragonAwake, i*width, j*height, this);
-				if (maze.getBoard()[j][i] == 'd' || maze.getBoard()[i][j] == 'f')
+				if (maze[j][i] == 'd' || maze[i][j] == 'f')
 					g.drawImage(dragonAsleep, i*width, j*height, this);
-				if (maze.getBoard()[j][i] == 'E')
+				if (maze[j][i] == 'E')
 					g.drawImage(sword, i*width, j*height, this);
-				if (maze.getBoard()[j][i] == 'S')
+				if (maze[j][i] == 'S')
 					g.drawImage(exit, i*width, j*height, this);
-				if (maze.getBoard()[j][i] == ' ')
+				if (maze[j][i] == ' ')
 					g.drawImage(relva, i*width, j*height, this);
-				if (maze.getBoard()[j][i] == 'H')
+				if (maze[j][i] == 'H')
 					g.drawImage(heroUnarmed, i*width, j*height, this);
-				if (maze.getBoard()[j][i] == 'A')
+				if (maze[j][i] == 'A')
 					g.drawImage(heroArmed, i*width, j*height, this);
-				if (maze.getBoard()[j][i] == 'X')
+				if (maze[j][i] == 'X')
 					g.drawImage(wall, i*width, j*height, this);
 			}
 		}	
 	}
-	
-	@Override
-	public void keyPressed(KeyEvent e) {			
-		switch(e.getKeyCode()){
-		case KeyEvent.VK_W:
-			maze.moveHero('W');
-			System.out.println("Up");
-			repaint();
-			break;
-		case KeyEvent.VK_S:
-			maze.moveHero('S');
-			repaint();
-			break;
-		case KeyEvent.VK_A:
-			maze.moveHero('A');
-			repaint();
-			break;
-		case KeyEvent.VK_D:
-			maze.moveHero('D');
-			repaint();
-			break;
-		default:
-			break;
-		}
-	}
-
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		}
-
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

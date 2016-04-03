@@ -3,10 +3,14 @@ package MAZE.Gui;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.accessibility.AccessibleContext;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import MAZE.Logic.Dragon;
 import MAZE.Logic.Maze;
+import MAZE.Logic.MazeBuilder;
+
 import javax.swing.JComboBox;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -14,15 +18,18 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Janela implements KeyListener {
+public class Janela {
 
 	private JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
-	private Maze maze = new Maze();
+	private Maze maze;
+	private MazeBuilder mazebuilder;
 	private GPainel panel;
+	private JLabel lblState;
+	private JButton btnCima, btnBaixo, btnDireita, btnEsquerda;
 
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -42,12 +49,42 @@ public class Janela implements KeyListener {
 	public Janela()  {
 		initialize();
 	}
+	public void setAllButtons(boolean button){
+		btnCima.setEnabled(button);
+		btnBaixo.setEnabled(button);
+		btnDireita.setEnabled(button);
+		btnEsquerda.setEnabled(button);
+	}
+	
+	public void moveDirection (char dir){
+		maze.moveHero(dir);
+		if (maze.getDragon().getType() == Dragon.Type.RANDOM )
+			maze.moveAllDragons();
+		if (maze.getDragon().getType() == Dragon.Type.SLEEPING ){
+			maze.randomSleep();
+			if (!maze.getDragon().getDragonAsleep())
+				maze.moveAllDragons();
+		}
+		maze.checkDragonPosition();
+		if (maze.getHero().getHeroAlive() == false){
+			lblState.setText("O herói morreu. Perdeu o jogo!");
+			setAllButtons(false);
+		}
+		
+		if (maze.getVitoria() == true){
+			lblState.setText("Ganhou o jogo!");
+			setAllButtons(false);
+		}
+		panel.repaint();
+	}
+	
+	
 
 
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setFont(new Font("Courier New", Font.PLAIN, 11));
-		frame.setBounds(100, 100, 643, 485);
+		frame.setBounds(100, 100, 643, 510);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -58,164 +95,162 @@ public class Janela implements KeyListener {
 		JLabel lblDimensoDoLabirinto = new JLabel("Dimens\u00E3o do labirinto");
 		lblDimensoDoLabirinto.setBounds(33, 36, 135, 14);
 		frame.getContentPane().add(lblDimensoDoLabirinto);
+		
 
 		textField = new JTextField();
 		textField.setText("11");
 		textField.setBounds(178, 33, 64, 20);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
-		
+
 		JLabel lblNmeroDeDrages = new JLabel("N\u00FAmero de drag\u00F5es");
 		lblNmeroDeDrages.setBounds(33, 64, 135, 14);
 		frame.getContentPane().add(lblNmeroDeDrages);
-		
+
 		textField_1 = new JTextField();
 		textField_1.setText("1");
 		textField_1.setBounds(178, 61, 64, 20);
 		frame.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
-		
+
 		JLabel lblTipoDeDrages = new JLabel("Tipo de drag\u00F5es");
 		lblTipoDeDrages.setBounds(33, 93, 94, 14);
 		frame.getContentPane().add(lblTipoDeDrages);
-		
+
 		String[] dragonType = {"Estático", "Aleatório", "Aleatório e adormecido"};
 		JComboBox comboBox = new JComboBox(dragonType);
 		comboBox.setBounds(178, 92, 135, 20);
 		frame.getContentPane().add(comboBox);	
-		
-		JLabel lblState = new JLabel("Pode gerar novo labirinto!");
-		lblState.setBounds(33, 396, 334, 14);
+
+		lblState = new JLabel("Pode gerar novo labirinto!");
+		lblState.setBounds(34, 425, 334, 14);
 		frame.getContentPane().add(lblState);		
-		
+
 		//Botao Cima
-		JButton btnCima = new JButton("Cima");
+		btnCima = new JButton("Cima");
 		btnCima.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				maze.moveHero('W');
-				panel.setMaze(maze);
-				if (maze.getDragon().getType() == Dragon.Type.RANDOM )
-					maze.moveDragonRandomly();
-				if (maze.getDragon().getType() == Dragon.Type.SLEEPING ){
-					maze.randomSleep();
-					if (!maze.getDragon().getDragonAsleep())
-						maze.moveDragonRandomly();
-				}
-				maze.checkDragonPosition();
-				if (maze.getHero().getHeroAlive() == false)
-					lblState.setText("O herói morreu. Perdeu o jogo!");
-				panel.repaint();
-				if (maze.getVitoria() == true)
-					lblState.setText("Ganhou o jogo!");
+				moveDirection('W');
 			}
 		});
 		btnCima.setEnabled(false);
 		btnCima.setBounds(453, 194, 89, 37);
 		frame.getContentPane().add(btnCima);
-		
+
 		//Botao Esquerda
-		JButton btnEsquerda = new JButton("Esquerda");
+		btnEsquerda = new JButton("Esquerda");
 		btnEsquerda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				maze.moveHero('A');
-				panel.setMaze(maze);
-				if (maze.getDragon().getType() == Dragon.Type.RANDOM )
-					maze.moveDragonRandomly();
-				if (maze.getDragon().getType() == Dragon.Type.SLEEPING ){
-					maze.randomSleep();
-					if (!maze.getDragon().getDragonAsleep())
-						maze.moveDragonRandomly();
-				}
-				maze.checkDragonPosition();
-				if (maze.getHero().getHeroAlive() == false)
-					lblState.setText("O herói morreu. Perdeu o jogo!");
-				panel.repaint();
-				if (maze.getVitoria() == true)
-					lblState.setText("Ganhou o jogo!");
-		}
+				moveDirection('A');
+			}
 		});
 		btnEsquerda.setEnabled(false);
 		btnEsquerda.setBounds(404, 238, 89, 37);
 		frame.getContentPane().add(btnEsquerda);
-		
-		
+
+
 		//Botao Direita
-		JButton btnDireita = new JButton("Direita");
+		btnDireita = new JButton("Direita");
 		btnDireita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				maze.moveHero('D');
-				panel.setMaze(maze);
-				if (maze.getDragon().getType() == Dragon.Type.RANDOM )
-					maze.moveDragonRandomly();
-				if (maze.getDragon().getType() == Dragon.Type.SLEEPING ){
-					maze.randomSleep();
-					if (!maze.getDragon().getDragonAsleep())
-						maze.moveDragonRandomly();
-				}
-				maze.checkDragonPosition();
-				if (maze.getHero().getHeroAlive() == false)
-					lblState.setText("O herói morreu. Perdeu o jogo!");
-				panel.repaint();
-				if (maze.getVitoria() == true)
-					lblState.setText("Ganhou o jogo!");
+				moveDirection('D');
 			}
 		});
 		btnDireita.setEnabled(false);
 		btnDireita.setBounds(507, 238, 89, 37);
 		frame.getContentPane().add(btnDireita);
-		
-		
+
+
 		//Botao Baixo
-		JButton btnBaixo = new JButton("Baixo");
+		btnBaixo = new JButton("Baixo");
 		btnBaixo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				maze.moveHero('S');
-				panel.setMaze(maze);
-				if (maze.getDragon().getType() == Dragon.Type.RANDOM )
-					maze.moveDragonRandomly();
-				if (maze.getDragon().getType() == Dragon.Type.SLEEPING ){
-					maze.randomSleep();
-					if (!maze.getDragon().getDragonAsleep())
-						maze.moveDragonRandomly();
-				}
-				maze.checkDragonPosition();
-				if (maze.getHero().getHeroAlive() == false)
-					lblState.setText("O herói morreu. Perdeu o jogo!");
-				panel.repaint();
-				if (maze.getVitoria() == true)
-					lblState.setText("Ganhou o jogo!");
+				moveDirection('S');
 			}
 		});
 		btnBaixo.setEnabled(false);
 		btnBaixo.setBounds(453, 286, 89, 37);
 		frame.getContentPane().add(btnBaixo);
-		
+
 		JButton btnGerarNovoLabirinto = new JButton("Gerar novo labirinto");
 		btnGerarNovoLabirinto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try{
+					int dimensao = Integer.parseInt(textField.getText());}
+					catch (NumberFormatException ex){
+						JOptionPane.showMessageDialog(frame, "Formato não válido!");
+						return;
+					}				
+				try{
+					int numerodedragoes = Integer.parseInt(textField_1.getText());}
+					catch (NumberFormatException ex){
+						JOptionPane.showMessageDialog(frame, "Formato não válido!");
+						return;
+					}
 				panel = new GPainel();
 				panel.requestFocus();
 				panel.repaint();
-				panel.setBounds(37, 133, 278, 262);
+				panel.setBounds(40, 140, 290, 280);
+				maze = new Maze();
+				mazebuilder = new MazeBuilder();
+				maze.setBoard(mazebuilder.buildMaze(Integer.parseInt(textField.getText())));
+				maze.placeHero();
+				maze.placeDragons(Integer.parseInt(textField_1.getText()));
+				maze.placeSword();
 				frame.getContentPane().add(panel);
 				String dragonstate = (String) comboBox.getSelectedItem();
+				for (int i =0; i < Integer.parseInt(textField_1.getText()); i++){
 				if (dragonstate == "Estático"){
-					maze.getDragon().setType(Dragon.Type.STATIONARY);
+					maze.getDragons().get(i).setType(Dragon.Type.STATIONARY);
 				}
 				if (dragonstate == "Aleatório"){
-					maze.getDragon().setType(Dragon.Type.RANDOM);
+					maze.getDragons().get(i).setType(Dragon.Type.RANDOM);
 				}
 				if (dragonstate == "Aleatório e adormecido"){
-					maze.getDragon().setType(Dragon.Type.SLEEPING);
+					maze.getDragons().get(i).setType(Dragon.Type.SLEEPING);
 				}
-				panel.setMaze(maze);
+				panel.setMaze(maze.getBoard());
 				panel.repaint();
-				btnCima.setEnabled(true);
-				btnBaixo.setEnabled(true);
-				btnDireita.setEnabled(true);
-				btnEsquerda.setEnabled(true);
+				setAllButtons(true);
 				lblState.setText("Pode jogar!");
-		
+				panel.addKeyListener(new KeyListener() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						if (!maze.getVitoria() && maze.getHero().getHeroAlive())
+						switch(e.getKeyCode()){
+						case KeyEvent.VK_W:
+						case KeyEvent.VK_UP:
+							moveDirection('W');
+							panel.repaint();
+							break;
+						case KeyEvent.VK_S:
+						case KeyEvent.VK_DOWN:	
+							moveDirection('S');
+							panel.repaint();
+							break;
+						case KeyEvent.VK_A:
+						case KeyEvent.VK_LEFT:	
+							moveDirection('A');
+							panel.repaint();
+							break;
+						case KeyEvent.VK_D:
+						case KeyEvent.VK_RIGHT:
+							moveDirection('D');
+							panel.repaint();
+							break;
+						default:
+							break;
+						}  
+					}
+
+					@Override
+					public void keyReleased(KeyEvent e) {}
+
+					@Override
+					public void keyTyped(KeyEvent e) {}
+				});
+				panel.requestFocus();
+			}
 			}
 		});	
 		btnGerarNovoLabirinto.setBounds(404, 36, 152, 37);
@@ -229,36 +264,8 @@ public class Janela implements KeyListener {
 				System.exit(0);
 			}
 		});
-		
+
 	}
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		switch(e.getKeyCode()){
-		case KeyEvent.VK_W:
-			maze.moveHero('W');
-			panel.repaint();
-			break;
-		case KeyEvent.VK_S:
-			maze.moveHero('S');
-			panel.repaint();
-			break;
-		case KeyEvent.VK_A:
-			maze.moveHero('A');
-			panel.repaint();
-			break;
-		case KeyEvent.VK_D:
-			maze.moveHero('D');
-			panel.repaint();
-			break;
-		default:
-			break;
-		}	
-	}
 
-	@Override
-	public void keyReleased(KeyEvent e) {}
-
-	@Override
-	public void keyTyped(KeyEvent e) {}
 }

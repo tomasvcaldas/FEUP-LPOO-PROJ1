@@ -1,30 +1,71 @@
 package MAZE.Logic;
 import java.util.Random;
+import java.util.Vector;
 
 public class Maze   {
 	private Hero hero;
 	private Dragon dragon;
 	private Sword sword;
 	private boolean vitoria;
+	private MazeBuilder mazeBuilder;
+	private char[][] board;
+	public boolean placed;
+	Vector <Dragon> dragons;
+	
 
-	private char[][] board = {
-			{'X','X','X','X','X','X','X','X','X','X'},
-			{'X','H',' ',' ',' ',' ',' ',' ',' ','X'},
-			{'X',' ','X','X',' ','X',' ','X',' ','X'},
-			{'X','D','X','X',' ','X',' ','X',' ','X'},
-			{'X',' ','X','X',' ','X',' ','X',' ','X'},
-			{'X',' ',' ',' ',' ',' ',' ','X',' ','S'},
-			{'X',' ','X','X',' ','X',' ','X',' ','X'},
-			{'X',' ','X','X',' ','X',' ','X',' ','X'},
-			{'X','E','X','X',' ',' ',' ',' ',' ','X'},
-			{'X','X','X','X','X','X','X','X','X','X'}};
-
-	public Maze(){
-		hero = new Hero(1,1);
-		dragon = new Dragon(1,3);
-		sword =  new Sword(1,8);		
+			
+	public Maze(){}
+	
+	public void placeHero(){
+		placed = false;		
+		Random rand = new Random();
+		while(placed == false){
+			int heroLine = rand.nextInt(board.length);
+			int heroCol = rand.nextInt(board.length);
+			if(board[heroCol][heroLine] == ' '){
+				board[heroCol][heroLine] = 'H';
+				placed = true;
+				hero = new Hero(heroLine, heroCol);
+			}
+		}
 	}
 	
+	public void placeDragons(int numDragons){
+		dragons = new Vector<Dragon>();
+		placed =  false;
+		Random rand = new Random();
+		for(int i = 0; i < numDragons; i++){
+			while(placed == false){
+				int dragonLine = rand.nextInt(board.length) ;
+				int dragonCol = rand.nextInt(board.length);
+
+				if(board[dragonCol][dragonLine] == ' ' && board[dragonCol-1][dragonLine] != 'H' 
+						&& board[dragonCol+1][dragonLine] != 'H' && board[dragonCol][dragonLine] != 'H'
+						&& board[dragonCol][dragonLine] != 'H' && board[dragonCol][dragonLine] != 'D'){
+					board[dragonCol][dragonLine] = 'D';
+					placed = true;
+					dragon =  new Dragon(dragonLine, dragonCol);
+					dragons.add(dragon);
+				}
+			}
+			placed = false;
+		}
+	}
+	
+	public void placeSword(){
+		Random rand = new Random();
+		placed = false;
+		while(placed == false){
+			int swordLine = rand.nextInt(board.length);
+			int swordCol = rand.nextInt(board.length);
+
+			if (board[swordCol][swordLine] == ' '){
+				board[swordCol][swordLine] = 'E';
+				placed = true;
+				sword = new Sword(swordLine, swordCol);
+			}
+		}
+	}
 	
 	public Hero getHero() {
 		return hero;
@@ -62,6 +103,10 @@ public class Maze   {
 		return vitoria;
 	}
 	
+	public Vector <Dragon> getDragons(){
+		return dragons;
+	}
+	
 	public String toString(){
 		
 		String str = "";
@@ -77,7 +122,7 @@ public class Maze   {
 	}
 
 
-public void randomSleep(){
+	public void randomSleep(){
 		
 		Random r = new Random();
 		int sleep = r.nextInt(2);
@@ -94,7 +139,7 @@ public void randomSleep(){
 	}
 }	
 
-
+	
 	public boolean moveHero(char dir){
 		
 		if(dir == 'W'){ // move up
@@ -278,6 +323,7 @@ public void randomSleep(){
 		return true;
 	}
 
+	
 	public boolean checkDragonPosition(){
 		if(dragon.getDragonAlive() == true){
 			if(hero.getHeroArmed() == false){
@@ -329,14 +375,19 @@ public void randomSleep(){
 		return true;
 	}
 	
+	public void moveAllDragons(){
+		for(int i = 0; i < dragons.size() ; i++){
+			moveDragonRandomly(dragons.elementAt(i));
+		}
+	}
 	
-	public void moveDragonRandomly(){
-		int move = dragon.randomDragon();
 
+	public void moveDragonRandomly(Dragon dragon){
+		int move = dragon.randomDragon();
 		if (dragon.getDragonAlive() == true && dragon.getDragonAsleep() == false){ //o drago so mexe se estiver vivo e o dragao nao estiver a dormir
 
 			if(move == 1 ){ // move up
-				if(board[dragon.getY()-1][dragon.getX()] != 'X'){
+				if(board[dragon.getY()-1][dragon.getX()] != 'X' && board[dragon.getY()-1][dragon.getX()] != 'S' ){
 					if(board[dragon.getY()-1][dragon.getX()] == ' '){
 						dragon.setY(dragon.getY()-1);
 						dragon.setX(dragon.getX());
@@ -357,7 +408,7 @@ public void randomSleep(){
 				}
 			}
 			if(move == 2 ){ // move right
-				if(board[dragon.getY()][dragon.getX()+1] != 'X'){
+				if(board[dragon.getY()][dragon.getX()+1] != 'X' && board[dragon.getY()][dragon.getX()+1] != 'S'){
 					if(board[dragon.getY()][dragon.getX()+1] == ' '){
 						dragon.setY(dragon.getY());
 						dragon.setX(dragon.getX()+1);
@@ -378,7 +429,7 @@ public void randomSleep(){
 				}
 			}
 			if(move == 3){ // move down
-				if(board[dragon.getY()+1][dragon.getX()] != 'X'){
+				if(board[dragon.getY()+1][dragon.getX()] != 'X' && board[dragon.getY()+1][dragon.getX()] != 'S'){
 					if(board[dragon.getY()+1][dragon.getX()] == ' '){
 						dragon.setY(dragon.getY()+1);
 						dragon.setX(dragon.getX());
@@ -399,7 +450,7 @@ public void randomSleep(){
 				}	
 			}
 			if(move == 4 ){ // move left
-				if(board[dragon.getY()][dragon.getX()-1] != 'X'){
+				if(board[dragon.getY()][dragon.getX()-1] != 'X' && board[dragon.getY()][dragon.getX()-1] != 'S'){
 					if(board[dragon.getY()][dragon.getX()-1] == ' '){
 						dragon.setY(dragon.getY());
 						dragon.setX(dragon.getX()-1);
