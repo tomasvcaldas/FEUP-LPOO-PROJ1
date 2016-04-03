@@ -18,13 +18,6 @@ public class Game     {
 		Game game =  new Game();
 		Maze maze  = new Maze();
 		Hero hero =  new Hero();
-		MazeBuilder mazeBuilder = new MazeBuilder();
-		Scanner reader = new Scanner(System.in);
-		System.out.println("Qual vai ser o tamanho do lado do tabuleiro ?");
-		int size = reader.nextInt();
-		System.out.println("Quantos dragões ? ");
-		int dragons = reader.nextInt();
-		mazeBuilder.buildMaze(size, dragons);
 		Dragon dragon = new Dragon();
 		MazeBuilder mazeBuilder = new MazeBuilder();
 		char move1;
@@ -38,7 +31,6 @@ public class Game     {
 		int size = reader.nextInt();
 		System.out.println("Quantos dragões ? ");
 		int dragons = reader.nextInt();
-		
 		maze.setBoard(mazeBuilder.buildMaze(size)); // cria o random maze
 		maze.placeHero();
 		maze.placeDragons(dragons);
