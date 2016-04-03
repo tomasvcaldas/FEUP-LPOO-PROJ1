@@ -4,6 +4,7 @@ import java.util.Scanner;
 import MAZE.Logic.Dragon;
 import MAZE.Logic.Hero;
 import MAZE.Logic.Maze;
+import MAZE.Logic.MazeBuilder;
 
 public class Game     {
 	public boolean endGame;
@@ -17,6 +18,13 @@ public class Game     {
 		Game game =  new Game();
 		Maze maze  = new Maze();
 		Hero hero =  new Hero();
+		MazeBuilder mazeBuilder = new MazeBuilder();
+		Scanner reader = new Scanner(System.in);
+		System.out.println("Qual vai ser o tamanho do lado do tabuleiro ?");
+		int size = reader.nextInt();
+		System.out.println("Quantos dragões ? ");
+		int dragons = reader.nextInt();
+		mazeBuilder.buildMaze(size, dragons);
 		Dragon dragon = new Dragon();
 		dragon.setType(dragon.defineType());
 		char move1;
