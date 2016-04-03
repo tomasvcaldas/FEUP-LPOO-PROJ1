@@ -22,6 +22,12 @@ public class Stationary {
 			       {'X', ' ', 'X', 'D', 'X'},
 			       {'X', 'E', 'H', ' ', 'X'},
 			       {'X', 'X', 'X', 'X', 'X'}};
+			  
+	char[][] m4  ={{'X', ' ', ' ', 'D', 'S'},
+			       {'X', 'E', 'X', ' ', 'X'},
+			       {'X', 'H', ' ', ' ', 'X'},
+			       {'X', 'X', 'X', 'X', 'X'}};
+	
 
 	@Test
 	public void test2a() {
@@ -37,6 +43,7 @@ public class Stationary {
 	@Test
 	public void moveRight() {
 
+
 		Maze maze = new Maze();
 		maze.setBoard(m2);
 		maze.setHero(new Hero(2,3));
@@ -45,8 +52,46 @@ public class Stationary {
 		assertEquals(3,maze.getHero().getY());	
 	}
 
+		Maze maze = new Maze();
+		maze.setBoard(m2);
+		maze.setHero(new Hero(2,3));
+		maze.moveHero('D');
+		assertEquals(3,maze.getHero().getX());
+		assertEquals(3,maze.getHero().getY());	
+	}
+	
 	@Test
+	public void moveUp() {
 
+		Maze maze = new Maze();
+		maze.setBoard(m1);
+		maze.setHero(new Hero(1,2));
+		maze.moveHero('W');
+		assertEquals(1,maze.getHero().getX());
+		assertEquals(1,maze.getHero().getY());	
+	}
+	
+	@Test
+	public void moveUpSword() {
+
+		Maze maze = new Maze();
+		maze.setBoard(m3);
+		maze.setHero(new Hero(1,3));
+		maze.moveHero('W');
+		assertEquals(true,maze.getHero().getHeroArmed());
+	}
+	
+	@Test
+	public void moveLeftSword() {
+
+		Maze maze = new Maze();
+		maze.setBoard(m2);
+		maze.setHero(new Hero(2,3));
+		maze.moveHero('A');
+		assertEquals(true,maze.getHero().getHeroArmed());
+	}
+
+	@Test
 	public void test2b() {
 
 		Maze maze = new Maze();
