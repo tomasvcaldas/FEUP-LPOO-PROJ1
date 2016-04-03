@@ -1,27 +1,20 @@
 package MAZE.Gui;
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-
 import MAZE.Logic.Dragon;
 import MAZE.Logic.Maze;
-
 import javax.swing.JComboBox;
-import java.awt.event.ItemListener;
-import java.io.IOException;
-import java.awt.event.ItemEvent;
-import javax.swing.JTextArea;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JPanel;
 
-public class Janela {
+public class Janela implements KeyListener {
 
 	private JFrame frame;
 	private JTextField textField;
@@ -57,15 +50,15 @@ public class Janela {
 		frame.setBounds(100, 100, 643, 485);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+
 		JLabel label = new JLabel("");
 		label.setBounds(0, 0, 434, 0);
 		frame.getContentPane().add(label);
-		
+
 		JLabel lblDimensoDoLabirinto = new JLabel("Dimens\u00E3o do labirinto");
 		lblDimensoDoLabirinto.setBounds(33, 36, 135, 14);
 		frame.getContentPane().add(lblDimensoDoLabirinto);
-		
+
 		textField = new JTextField();
 		textField.setText("11");
 		textField.setBounds(178, 33, 64, 20);
@@ -92,10 +85,10 @@ public class Janela {
 		frame.getContentPane().add(comboBox);	
 		
 		JLabel lblState = new JLabel("Pode gerar novo labirinto!");
-		lblState.setBounds(33, 396, 164, 14);
+		lblState.setBounds(33, 396, 334, 14);
 		frame.getContentPane().add(lblState);		
 		
-		//Cria botoes
+		//Botao Cima
 		JButton btnCima = new JButton("Cima");
 		btnCima.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -109,6 +102,8 @@ public class Janela {
 						maze.moveDragonRandomly();
 				}
 				maze.checkDragonPosition();
+				if (maze.getHero().getHeroAlive() == false)
+					lblState.setText("O herói morreu. Perdeu o jogo!");
 				panel.repaint();
 				if (maze.getVitoria() == true)
 					lblState.setText("Ganhou o jogo!");
@@ -118,6 +113,7 @@ public class Janela {
 		btnCima.setBounds(453, 194, 89, 37);
 		frame.getContentPane().add(btnCima);
 		
+		//Botao Esquerda
 		JButton btnEsquerda = new JButton("Esquerda");
 		btnEsquerda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -131,15 +127,19 @@ public class Janela {
 						maze.moveDragonRandomly();
 				}
 				maze.checkDragonPosition();
+				if (maze.getHero().getHeroAlive() == false)
+					lblState.setText("O herói morreu. Perdeu o jogo!");
 				panel.repaint();
 				if (maze.getVitoria() == true)
 					lblState.setText("Ganhou o jogo!");
-			}
+		}
 		});
 		btnEsquerda.setEnabled(false);
 		btnEsquerda.setBounds(404, 238, 89, 37);
 		frame.getContentPane().add(btnEsquerda);
 		
+		
+		//Botao Direita
 		JButton btnDireita = new JButton("Direita");
 		btnDireita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -153,6 +153,8 @@ public class Janela {
 						maze.moveDragonRandomly();
 				}
 				maze.checkDragonPosition();
+				if (maze.getHero().getHeroAlive() == false)
+					lblState.setText("O herói morreu. Perdeu o jogo!");
 				panel.repaint();
 				if (maze.getVitoria() == true)
 					lblState.setText("Ganhou o jogo!");
@@ -162,6 +164,8 @@ public class Janela {
 		btnDireita.setBounds(507, 238, 89, 37);
 		frame.getContentPane().add(btnDireita);
 		
+		
+		//Botao Baixo
 		JButton btnBaixo = new JButton("Baixo");
 		btnBaixo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -175,6 +179,8 @@ public class Janela {
 						maze.moveDragonRandomly();
 				}
 				maze.checkDragonPosition();
+				if (maze.getHero().getHeroAlive() == false)
+					lblState.setText("O herói morreu. Perdeu o jogo!");
 				panel.repaint();
 				if (maze.getVitoria() == true)
 					lblState.setText("Ganhou o jogo!");
@@ -188,6 +194,8 @@ public class Janela {
 		btnGerarNovoLabirinto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panel = new GPainel();
+				panel.requestFocus();
+				panel.repaint();
 				panel.setBounds(37, 133, 278, 262);
 				frame.getContentPane().add(panel);
 				String dragonstate = (String) comboBox.getSelectedItem();
@@ -210,22 +218,47 @@ public class Janela {
 		
 			}
 		});	
-		
 		btnGerarNovoLabirinto.setBounds(404, 36, 152, 37);
 		frame.getContentPane().add(btnGerarNovoLabirinto);
 
 		JButton btnTerminarPrograma = new JButton("Terminar programa");
 		btnTerminarPrograma.setBounds(404, 95, 152, 37);
 		frame.getContentPane().add(btnTerminarPrograma);
-		
-		
-	
-		
 		btnTerminarPrograma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				System.exit(0);
 			}
 		});
-
+		
 	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		switch(e.getKeyCode()){
+		case KeyEvent.VK_W:
+			maze.moveHero('W');
+			panel.repaint();
+			break;
+		case KeyEvent.VK_S:
+			maze.moveHero('S');
+			panel.repaint();
+			break;
+		case KeyEvent.VK_A:
+			maze.moveHero('A');
+			panel.repaint();
+			break;
+		case KeyEvent.VK_D:
+			maze.moveHero('D');
+			panel.repaint();
+			break;
+		default:
+			break;
+		}	
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {}
+
+	@Override
+	public void keyTyped(KeyEvent e) {}
 }

@@ -2,10 +2,14 @@ package MAZE.Gui;
 import MAZE.Logic.*;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class GPainel extends JPanel {
+public class GPainel extends JPanel implements KeyListener{
 	
 	Image dragonAwake, dragonAsleep, wall, heroArmed, heroUnarmed, exit, sword, relva;
 	private int x=0, y=0, width=25, height=25;
@@ -35,6 +39,8 @@ public class GPainel extends JPanel {
 		wall = new ImageIcon("wall.jpg").getImage();
 		wall= wall.getScaledInstance(width, height, 1);
 		
+		addKeyListener(this);
+		this.setFocusable(true);
 	}
 
 	@Override
@@ -61,5 +67,44 @@ public class GPainel extends JPanel {
 					g.drawImage(wall, i*width, j*height, this);
 			}
 		}	
-	}	
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent e) {			
+		switch(e.getKeyCode()){
+		case KeyEvent.VK_W:
+			maze.moveHero('W');
+			System.out.println("Up");
+			repaint();
+			break;
+		case KeyEvent.VK_S:
+			maze.moveHero('S');
+			repaint();
+			break;
+		case KeyEvent.VK_A:
+			maze.moveHero('A');
+			repaint();
+			break;
+		case KeyEvent.VK_D:
+			maze.moveHero('D');
+			repaint();
+			break;
+		default:
+			break;
+		}
+	}
+
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		}
+
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
