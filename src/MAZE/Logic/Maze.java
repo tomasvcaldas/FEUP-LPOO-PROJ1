@@ -107,7 +107,7 @@ public class Maze   {
 		return dragons;
 	}
 	
-	public String toString(){
+	/*public String toString(){
 		
 		String str = "";
 		
@@ -119,7 +119,7 @@ public class Maze   {
 			str += "\n"; 
 		}
 		return str;
-	}
+	}*/
 
 
 	public void randomSleep(){
