@@ -11,13 +11,19 @@ public class MazeBuilder {
 	private Hero hero;
 	private Dragon dragon;
 	private Sword sword;
-
+	/**
+	 * @brief inicializa o labirinto random
+	 */
 	public MazeBuilder(){}
 
 	class Cell
 	{
 		public int line, col;
-
+		/**
+		 * Inicializa e constroi uma cela com dado X e dado Y
+		 * @param col
+		 * @param line
+		 */
 		public Cell(int col, int line)
 		{
 			this.line = line;
@@ -25,7 +31,13 @@ public class MazeBuilder {
 		}
 	}
 
-
+	/**
+	 * @brief Verifica se a cell onde estamos não se consegue movimentar para nenhum sítio por onde já tenha passado
+	 * @param x
+	 * @param y
+	 * @param visitedCell
+	 * @return verdadeiro caso não se consgio movimentar, ou falso caso consiga.
+	 */
 	public boolean deadEnd(int x, int y , char[][] visitedCell){
 		if(y-1 >= 0)
 			if(visitedCell[y-1][x] == '.') return false;
@@ -40,7 +52,11 @@ public class MazeBuilder {
 
 	}
 
-
+	/**
+	 * @brief Cria um tabuleiro random com lado = size em que para cada célula em branco há possibilidade de chegar à saída
+	 * @param size
+	 * @return
+	 */
 
 	public char[][] buildMaze(int size){
 		maze = new char[size][size];
@@ -167,7 +183,10 @@ public class MazeBuilder {
 		return maze;
 
 	}
-
+	
+	/**
+	 * @brief Verifica se o tabuleiro random não tem nenhuma célula em branco sem caminho para a sáida
+	 */
 	public void cleanMaze2(){
 		if(guideCell.line == 0 && guideCell.col == 0)
 			maze[guideCell.line*2+2][guideCell.col*2+1] = ' ';
@@ -188,6 +207,10 @@ public class MazeBuilder {
 
 	}
 	
+	/**
+	 * @brief Retorna o maze que se está a usar
+	 * @return Retorna o random maze
+	 */
 	public char[][] getMaze(){
 		return maze;
 	}
