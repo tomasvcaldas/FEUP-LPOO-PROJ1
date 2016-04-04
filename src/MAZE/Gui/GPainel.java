@@ -44,26 +44,27 @@ public class GPainel extends JPanel{
 
 	@Override
 	protected void paintComponent(Graphics g) {
+		int ySize = getHeight() / maze.length, xSize = getWidth() / maze.length;
 		super.paintComponent(g);
 
 		for (int i=0; i < maze.length; i++){
 			for (int j=0; j < maze[i].length; j++){
 				if (maze[j][i] == 'D' || maze[i][j] == 'F')
-					g.drawImage(dragonAwake, i*width, j*height, this);
+					g.drawImage(dragonAwake, i*xSize, j*ySize, xSize, ySize,  this);
 				if (maze[j][i] == 'd' || maze[i][j] == 'f')
-					g.drawImage(dragonAsleep, i*width, j*height, this);
+					g.drawImage(dragonAsleep, i*xSize, j*ySize, xSize, ySize,  this);
 				if (maze[j][i] == 'E')
-					g.drawImage(sword, i*width, j*height, this);
+					g.drawImage(sword, i*xSize, j*ySize, xSize, ySize,  this);
 				if (maze[j][i] == 'S')
-					g.drawImage(exit, i*width, j*height, this);
+					g.drawImage(exit, i*xSize, j*ySize, xSize, ySize,  this);
 				if (maze[j][i] == ' ')
-					g.drawImage(relva, i*width, j*height, this);
+					g.drawImage(relva, i*xSize, j*ySize, xSize, ySize,  this);
 				if (maze[j][i] == 'H')
-					g.drawImage(heroUnarmed, i*width, j*height, this);
+					g.drawImage(heroUnarmed, i*xSize, j*ySize, xSize, ySize,  this);
 				if (maze[j][i] == 'A')
-					g.drawImage(heroArmed, i*width, j*height, this);
+					g.drawImage(heroArmed, i*xSize, j*ySize, xSize, ySize,  this);
 				if (maze[j][i] == 'X')
-					g.drawImage(wall, i*width, j*height, this);
+					g.drawImage(wall, i*xSize, j*ySize, xSize, ySize,  this);
 			}
 		}	
 	}
