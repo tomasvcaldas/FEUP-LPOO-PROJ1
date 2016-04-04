@@ -84,7 +84,7 @@ public class Janela {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setFont(new Font("Courier New", Font.PLAIN, 11));
-		frame.setBounds(100, 100, 643, 510);
+		frame.setBounds(200, 50, 900, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -93,37 +93,38 @@ public class Janela {
 		frame.getContentPane().add(label);
 
 		JLabel lblDimensoDoLabirinto = new JLabel("Dimens\u00E3o do labirinto");
-		lblDimensoDoLabirinto.setBounds(33, 36, 135, 14);
+		lblDimensoDoLabirinto.setBounds(33, 39, 135, 14);
 		frame.getContentPane().add(lblDimensoDoLabirinto);
 		
 
 		textField = new JTextField();
 		textField.setText("11");
-		textField.setBounds(178, 33, 64, 20);
+		textField.setBounds(178, 36, 64, 20);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 
 		JLabel lblNmeroDeDrages = new JLabel("N\u00FAmero de drag\u00F5es");
-		lblNmeroDeDrages.setBounds(33, 64, 135, 14);
+		lblNmeroDeDrages.setBounds(33, 70, 135, 14);
 		frame.getContentPane().add(lblNmeroDeDrages);
 
 		textField_1 = new JTextField();
 		textField_1.setText("1");
-		textField_1.setBounds(178, 61, 64, 20);
+		textField_1.setBounds(178, 67, 64, 20);
 		frame.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
 
 		JLabel lblTipoDeDrages = new JLabel("Tipo de drag\u00F5es");
-		lblTipoDeDrages.setBounds(33, 93, 94, 14);
+		lblTipoDeDrages.setBounds(33, 101, 94, 14);
 		frame.getContentPane().add(lblTipoDeDrages);
 
 		String[] dragonType = {"Estático", "Aleatório", "Aleatório e adormecido"};
 		JComboBox comboBox = new JComboBox(dragonType);
-		comboBox.setBounds(178, 92, 135, 20);
+		comboBox.setBounds(178, 98, 135, 20);
 		frame.getContentPane().add(comboBox);	
 
 		lblState = new JLabel("Pode gerar novo labirinto!");
-		lblState.setBounds(34, 425, 334, 14);
+		lblState.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblState.setBounds(33, 630, 334, 20);
 		frame.getContentPane().add(lblState);		
 
 		//Botao Cima
@@ -134,7 +135,7 @@ public class Janela {
 			}
 		});
 		btnCima.setEnabled(false);
-		btnCima.setBounds(453, 194, 89, 37);
+		btnCima.setBounds(669, 210, 89, 37);
 		frame.getContentPane().add(btnCima);
 
 		//Botao Esquerda
@@ -145,7 +146,7 @@ public class Janela {
 			}
 		});
 		btnEsquerda.setEnabled(false);
-		btnEsquerda.setBounds(404, 238, 89, 37);
+		btnEsquerda.setBounds(616, 258, 89, 37);
 		frame.getContentPane().add(btnEsquerda);
 
 
@@ -157,7 +158,7 @@ public class Janela {
 			}
 		});
 		btnDireita.setEnabled(false);
-		btnDireita.setBounds(507, 238, 89, 37);
+		btnDireita.setBounds(717, 258, 89, 37);
 		frame.getContentPane().add(btnDireita);
 
 
@@ -169,28 +170,32 @@ public class Janela {
 			}
 		});
 		btnBaixo.setEnabled(false);
-		btnBaixo.setBounds(453, 286, 89, 37);
+		btnBaixo.setBounds(669, 306, 89, 37);
 		frame.getContentPane().add(btnBaixo);
 
 		JButton btnGerarNovoLabirinto = new JButton("Gerar novo labirinto");
 		btnGerarNovoLabirinto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
-					int dimensao = Integer.parseInt(textField.getText());}
-					catch (NumberFormatException ex){
-						JOptionPane.showMessageDialog(frame, "Formato não válido!");
-						return;
-					}				
-				try{
-					int numerodedragoes = Integer.parseInt(textField_1.getText());}
-					catch (NumberFormatException ex){
-						JOptionPane.showMessageDialog(frame, "Formato não válido!");
-						return;
-					}
+					int dimensao = Integer.parseInt(textField.getText());
+					int numerodedragoes = Integer.parseInt(textField_1.getText());
+
+					if (dimensao > 19 )
+						throw new IllegalArgumentException();
+				}
+				catch (NumberFormatException ex){
+					JOptionPane.showMessageDialog(frame, "Formato não válido!");
+					return;
+				}
+				catch (IllegalArgumentException ex){
+					JOptionPane.showMessageDialog(frame, "Dimensão máxima: 19");
+					return;
+				}
+
 				panel = new GPainel();
 				panel.requestFocus();
 				panel.repaint();
-				panel.setBounds(40, 140, 290, 280);
+				panel.setBounds(40, 135, 500, 480);
 				maze = new Maze();
 				mazebuilder = new MazeBuilder();
 				maze.setBoard(mazebuilder.buildMaze(Integer.parseInt(textField.getText())));
@@ -253,11 +258,11 @@ public class Janela {
 			}
 			}
 		});	
-		btnGerarNovoLabirinto.setBounds(404, 36, 152, 37);
+		btnGerarNovoLabirinto.setBounds(629, 36, 152, 43);
 		frame.getContentPane().add(btnGerarNovoLabirinto);
 
 		JButton btnTerminarPrograma = new JButton("Terminar programa");
-		btnTerminarPrograma.setBounds(404, 95, 152, 37);
+		btnTerminarPrograma.setBounds(629, 110, 152, 43);
 		frame.getContentPane().add(btnTerminarPrograma);
 		btnTerminarPrograma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
