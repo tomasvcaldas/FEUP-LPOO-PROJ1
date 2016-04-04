@@ -52,6 +52,10 @@ public class Maze   {
 		}
 	}
 	
+	
+	
+	
+	
 	public void placeSword(){
 		Random rand = new Random();
 		placed = false;

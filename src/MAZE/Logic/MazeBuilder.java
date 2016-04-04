@@ -16,6 +16,8 @@ public class MazeBuilder {
 	 */
 	public MazeBuilder(){}
 
+	
+	
 	class Cell
 	{
 		public int line, col;

@@ -29,6 +29,7 @@ public class Hero  {
 	public Hero(){
 		
 	}
+
 	
 	/**
 	 * @brief retorna o valor de x do herói
