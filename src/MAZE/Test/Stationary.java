@@ -1,6 +1,9 @@
 package MAZE.Test;
 import static org.junit.Assert.*;
 import org.junit.Test;
+
+import com.sun.glass.ui.CommonDialogs.Type;
+
 import MAZE.Logic.*;
 
 public class Stationary {
@@ -76,6 +79,12 @@ public class Stationary {
 					  {'X', ' ', ' ', 'D', 'X'},
 					  {'X', ' ', 'X', ' ', 'X'},
 					  {'S', 'H', ' ', ' ', 'X'},
+					  {'X', 'X', 'X', 'X', 'X'}};
+	
+	char[][] m13  =  {{'X', 'X', 'X', 'X', 'X'},
+					  {'X', 'E', ' ', 'E', 'X'},
+					  {'X', ' ', 'D', ' ', 'X'},
+					  {'S', 'E', ' ', 'E', 'X'},
 					  {'X', 'X', 'X', 'X', 'X'}};
 
 	@Test
@@ -409,6 +418,48 @@ public class Stationary {
 		maze.checkDragonPosition();
 		assertEquals(true, maze.getHero().getHeroAlive());
 		assertEquals(false, maze.getDragon().getDragonAlive());
+	}
+	
+
+	@Test
+	public void placeSword(){
+		Maze maze =  new Maze();
+		Sword sword = new Sword(1,2);
+		maze.setBoard(m8);
+		sword.setX(2);
+		sword.setY(1);
+	}
+	
+	@Test
+	public void dragonAndSword(){
+		Maze maze  = new Maze();
+		maze.setBoard(m8);
+		maze.setSword(new Sword());
+		maze.getSword().setDragonAndSword(false);
+		assertEquals(false,maze.getSword().getDragonAndSword());
+	}
+		
+	@Test
+	public void createHero(){
+		Maze maze =  new Maze();
+		maze.setHero(new Hero());
+		maze.getHero().setHeroAlive(true);
+		assertEquals(true,maze.getHero().getHeroAlive());
+	}
+	
+	@Test 
+	public void dragonMovesrandomly(){
+		Maze maze =  new Maze();
+		Dragon dragon = new Dragon(2,2);
+		maze.setBoard(m13);
+		maze.setSword(new Sword(1,1));
+		maze.setSword(new Sword(1,3));
+		maze.setSword(new Sword(3,1));
+		maze.setSword(new Sword(3,3));
+		maze.setDragon(dragon);
+		for(int i = 0; i <50; i++){
+			maze.moveDragonRandomly(dragon);
+		}
 	}
 }
 

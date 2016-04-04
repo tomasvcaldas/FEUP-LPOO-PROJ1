@@ -168,16 +168,6 @@ public class MazeBuilder {
 
 	}
 
-	public void printRandomMaze(){
-		for(int i = 0; i < maze.length; i++){
-			for(int j = 0; j < maze[0].length; j++){
-				System.out.print(maze[j][i]);
-				System.out.print(' ');
-			}
-			System.out.println();
-		}
-	}
-
 	public void cleanMaze2(){
 		if(guideCell.line == 0 && guideCell.col == 0)
 			maze[guideCell.line*2+2][guideCell.col*2+1] = ' ';

@@ -11,6 +11,8 @@ public class Sword {
 		dragonAndSword = false;
 	}
 	
+	public Sword(){}
+	
 	public boolean getDragonAndSword(){
 		return dragonAndSword;
 	}
@@ -33,5 +35,5 @@ public class Sword {
 	
 	public void setY(int newY){
 		y = newY;
-	}
+	}	
 }

@@ -11,7 +11,6 @@ public class Dragon {
 	private boolean dragonAlive;
 	private Type type;
 	private boolean dragonAsleep;
-	
 	public Dragon(){
 	}
 	
@@ -19,7 +18,7 @@ public class Dragon {
 		dragonAlive = true;
 		this.x = x;
 		this.y = y;
-		dragonAsleep = false;
+		dragonAsleep = false; 
 	}
 	
 	public boolean getDragonAlive(){
