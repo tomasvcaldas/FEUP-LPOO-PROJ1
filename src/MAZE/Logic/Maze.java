@@ -329,7 +329,8 @@ public class Maze   {
 
 	
 	public boolean checkDragonPosition(){
-		if(dragon.getDragonAlive() == true){
+		for (int i = 0; i < dragons.size(); i++){
+		if(dragons.get(i).getDragonAlive() == true){
 			if(hero.getHeroArmed() == false){
 				if(board[hero.getY()+1][hero.getX()] == 'D' ){
 					board[hero.getY()][hero.getX()] = ' ';
@@ -354,34 +355,35 @@ public class Maze   {
 				
 			}
 			else if(hero.getHeroArmed() == true){
-				if (board[hero.getY() + 1][hero.getX()] == 'D' || board[hero.getY() + 1][hero.getX()] == 'd'){
-					board[dragon.getY()][dragon.getX()] = ' ';
-					dragon.setDragonAlive(false);
+				if (board[dragons.get(i).getY() + 1][dragons.get(i).getX()] == 'A'){
+					board[dragons.get(i).getY()][dragons.get(i).getX()] = ' ';
+					dragons.get(i).setDragonAlive(false);
 					return true;
 				}
-				else if (board[hero.getY() - 1][hero.getX()] == 'D' || board[hero.getY() - 1][hero.getX()] == 'd'){
-					board[dragon.getY()][dragon.getX()] = ' ';
-					dragon.setDragonAlive(false);
+				else if (board[dragons.get(i).getY() - 1][dragons.get(i).getX()] == 'A'){
+					board[dragons.get(i).getY()][dragons.get(i).getX()] = ' ';
+					dragons.get(i).setDragonAlive(false);
 					return true;
 				}
-				else if (board[hero.getY()][hero.getX()+1] == 'D' || board[hero.getY()][hero.getX()+1] == 'd'){
-					board[dragon.getY()][dragon.getX()] = ' ';
-					dragon.setDragonAlive(false);
+				else if (board[dragons.get(i).getY()][dragons.get(i).getX()+1] == 'A'){
+					board[dragons.get(i).getY()][dragons.get(i).getX()] = ' ';
+					dragons.get(i).setDragonAlive(false);
 					return true;
 				}
-				else if (board[hero.getY()][hero.getX()-1] == 'D' || board[hero.getY()][hero.getX()-1] == 'd'){
-					board[dragon.getY()][dragon.getX()] = ' ';
-					dragon.setDragonAlive(false);
+				else if (board[dragons.get(i).getY()][dragons.get(i).getX()-1] == 'A'){
+					board[dragons.get(i).getY()][dragons.get(i).getX()] = ' ';
+					dragons.get(i).setDragonAlive(false);
 					return true;
 				}
 			}
+		}
 		}
 		return true;
 	}
 	
 	public void moveAllDragons(){
 		for(int i = 0; i < dragons.size() ; i++){
-			moveDragonRandomly(dragons.elementAt(i));
+			moveDragonRandomly(dragons.get(i));
 		}
 	}
 	
